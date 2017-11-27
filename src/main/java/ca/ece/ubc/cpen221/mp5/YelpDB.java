@@ -6,12 +6,23 @@ import javax.json.*;
 
 public class YelpDB<T> implements MP5Db{
 
-	private Map<String, Business> businesses;
+	private Map<String, T> objects;
 	private Map<String, User> users;
 	private Map<String, Review> reviews;
 	
+	/**
+	 * Constructs the database from 3 Json Files
+	 * Currently only works for a database of businesses
+	 * Will see if can make more generic later
+	 * @param restaurantFile - name of JSON file containing restaurant data
+	 * @param reviewFile - name of JSON file containing review data
+	 * @param userFile - name of JSON file containing user data
+	 * @modifies this - creates business/review/user map, and creates the individual
+	 * businesses/users/reviews as objects
+	 */
+	
 	public YelpDB(String restaurantFile, String reviewFile, String userFile) throws IOException{
-		this.businesses = new HashMap<>();
+		this.objects = new HashMap<>();
 		this.reviews = new HashMap<>();
 		this.users = new HashMap<>();
 
@@ -21,7 +32,7 @@ public class YelpDB<T> implements MP5Db{
 		temp = jsonParse(restaurantFile);
 		for(JsonObject obj : temp){
 			Business business =  new Restaurant(obj);
-			businesses.put(business.getId(), business);
+			objects.put(business.getId(), (T) business);
 		}
 
 		temp = jsonParse(userFile);
@@ -40,12 +51,18 @@ public class YelpDB<T> implements MP5Db{
 			users.get(userID).addReview(review);
 
 			String businessID = obj.getString("business_id");
-			businesses.get(businessID).addReview(review);
+			Business currentBus = (Business) objects.get(businessID);
+			currentBus.addReview(review);
 		}
 	}
 	
 	//private List<String> specialTypes = Arrays.asList("open", "business_id", "name");
-	
+	/**
+	 * 
+	 * @param fileName - path for file
+	 * @return List of JSONObjects from the file
+	 * @throws IOException if file does not exist
+	 */
 	private static List<JsonObject> jsonParse(String fileName) throws IOException {
 		Scanner sc = new Scanner(new FileInputStream(fileName));
 		JsonReader readJson;
