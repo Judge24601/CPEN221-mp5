@@ -6,18 +6,15 @@ import java.util.Set;
 
 public interface Business {
 	
-	public long getId();
+	public String getId();
 	
 	public String getName();
 	
 	public Set<Review> getReviews();
 	
-	public Map<String, String> getInformationS();
+	public boolean addReview(Review rev);
 	
-	public Map<String, Number> getInformationN();
+	public double[] getLocation();
 	
-	public Map<String, List<String>> getInformationList();
-	public double getLat();
-	public double getLong();
 	public Boolean isOpen();
 }
