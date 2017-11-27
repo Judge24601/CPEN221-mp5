@@ -1,4 +1,5 @@
 package ca.ece.ubc.cpen221.mp5;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 import java.util.*;
@@ -26,11 +27,17 @@ public class Restaurant implements Business{
 		this.longitude = info.getJsonNumber("longitude").doubleValue();
 		this.latitude = info.getJsonNumber("latitude").doubleValue();
 
-		this.neighbourhoods = new ArrayList<>();
-		for(JsonValue jval : info.getJsonArray("neigborhoods"))neighbourhoods.add(jval.toString());
+		this.neighbourhoods = new ArrayList<String>();
+		JsonArray arr = info.getJsonArray("neighborhoods");
+		for(int i = 0; i < arr.size(); i++) {
+			neighbourhoods.add(arr.getString(i));
+		}
 
-		this.categories = new ArrayList<>();
-		for(JsonValue jval : info.getJsonArray("categories"))categories.add(jval.toString());
+		this.categories = new ArrayList<String>();
+		JsonArray arr2 = info.getJsonArray("categories");
+		for(int i = 0; i < arr2.size(); i++) {
+			neighbourhoods.add(arr2.getString(i));
+		}
 
 		this.reviews = new HashSet<Review>();
 	}
