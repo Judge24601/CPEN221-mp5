@@ -27,7 +27,7 @@ public class YelpDB<Business> implements MP5Db{
 
 		temp = jsonParse(userFile);
 		for(JsonObject obj : temp){
-			User user = new User(obj)
+			User user = new User(obj);
 			users.put(obj.getString("user_id"), user);
 		}
 
