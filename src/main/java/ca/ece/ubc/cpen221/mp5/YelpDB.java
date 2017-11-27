@@ -25,14 +25,23 @@ public class YelpDB<Business> implements MP5Db{
 			businesses.put(obj.getString("business_id"), business);
 		}
 
-		temp = jsonParse(reviewFile);
-		for(JsonObject obj : temp){
-			//reviews.put(obj.getString("review_id"), obj);
-		}
-
 		temp = jsonParse(userFile);
 		for(JsonObject obj : temp){
-			//users.put(obj.getString("user_id"), obj);
+			User user = new User(obj)
+			users.put(obj.getString("user_id"), user);
+		}
+
+		temp = jsonParse(reviewFile);
+		for(JsonObject obj : temp){
+			Review review = new Review(obj);
+			reviews.put(obj.getString("review_id"), review);
+
+			//putting reviews into users, restaurants
+			String userID = obj.getString("user_id");
+			users.get(userID).addReview(review);
+
+			String businessID = obj.getString("business_id");
+			restaurants.get(businessID).addReview(review);
 		}
 	}
 	
