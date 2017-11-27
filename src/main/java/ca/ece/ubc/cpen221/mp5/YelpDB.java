@@ -10,14 +10,7 @@ public class YelpDB<Business> implements MP5Db{
 	private Map<String, User> users;
 	private Map<String, Review> reviews;
 
-	public static void main(String[] args) {
-		try {
-		MP5Db db = new YelpDB("data/restaurants.json", "data/reviews.json", "data/users.json");
-		}catch (IOException e) {
-			
-		}
-	}
-	//Restaurant Constructor
+	
 	public YelpDB(String restaurantFile, String reviewFile, String userFile) throws IOException{
 		this.businesses = new HashMap<>();
 		this.reviews = new HashMap<>();
@@ -28,13 +21,13 @@ public class YelpDB<Business> implements MP5Db{
 		List<JsonObject> temp = new ArrayList<>();
 		temp = jsonParse(restaurantFile);
 		for(JsonObject obj : temp){
-			Business business =  new Business(obj);
+			Business business =  new Restaurant(obj);
 			businesses.put(obj.getString("business_id"), business);
 		}
 
 		temp = jsonParse(userFile);
 		for(JsonObject obj : temp){
-			User user = new User(obj);
+			User user = new User(obj)
 			users.put(obj.getString("user_id"), user);
 		}
 
@@ -48,7 +41,7 @@ public class YelpDB<Business> implements MP5Db{
 			users.get(userID).addReview(review);
 
 			String businessID = obj.getString("business_id");
-			businesses.get(businessID).addReview(review);
+			restaurants.get(businessID).addReview(review);
 		}
 	}
 	
