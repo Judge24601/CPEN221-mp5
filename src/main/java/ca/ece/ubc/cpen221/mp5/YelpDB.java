@@ -27,7 +27,7 @@ public class YelpDB<T> implements MP5Db{
 
 		temp = jsonParse(userFile);
 		for(JsonObject obj : temp){
-			User user = new User(obj)
+			User user = new User(obj);
 			users.put(obj.getString("user_id"), user);
 		}
 
@@ -41,7 +41,7 @@ public class YelpDB<T> implements MP5Db{
 			users.get(userID).addReview(review);
 
 			String businessID = obj.getString("business_id");
-			restaurants.get(businessID).addReview(review);
+			businesses.get(businessID).addReview(review);
 		}
 	}
 	
