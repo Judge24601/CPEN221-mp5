@@ -41,7 +41,7 @@ public class YelpDB<Business> implements MP5Db{
 			users.get(userID).addReview(review);
 
 			String businessID = obj.getString("business_id");
-			restaurants.get(businessID).addReview(review);
+			businesses.get(businessID).addReview(review);
 		}
 	}
 	
