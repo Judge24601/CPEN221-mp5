@@ -6,7 +6,7 @@ import javax.json.*;
 
 public class YelpDB<Business> implements MP5Db{
 
-	private Map<String, Restaurant> restaurants;
+	private Map<String, Business> businesses;
 	private Map<String, User> users;
 	private Map<String, Review> reviews;
 
@@ -25,7 +25,7 @@ public class YelpDB<Business> implements MP5Db{
 	}
 	
 	public YelpDB(String restaurantFile, String reviewFile, String userFile) throws IOException{
-		this.restaurants = new HashMap<>();
+		this.businesses = new HashMap<>();
 		this.reviews = new HashMap<>();
 		this.users = new HashMap<>();
 
@@ -34,8 +34,8 @@ public class YelpDB<Business> implements MP5Db{
 		List<JsonObject> temp = new ArrayList<>();
 		temp = jsonParse(restaurantFile);
 		for(JsonObject obj : temp){
-			Restaurant restaurant = new Restaurant(obj);
-			restaurants.put(obj.getString("business_id"), restaurant);
+			Business business =  new Restaurant(obj);
+			businesses.put(obj.getString("business_id"), business);
 		}
 
 		temp = jsonParse(reviewFile);
@@ -49,7 +49,7 @@ public class YelpDB<Business> implements MP5Db{
 		}
 	}
 	
-	private List<String> specialTypes = Arrays.asList("open", "business_id", "name");
+	//private List<String> specialTypes = Arrays.asList("open", "business_id", "name");
 	
 	private static List<JsonObject> jsonParse(String fileName) throws IOException {
 		Scanner sc = new Scanner(new FileInputStream(fileName));
