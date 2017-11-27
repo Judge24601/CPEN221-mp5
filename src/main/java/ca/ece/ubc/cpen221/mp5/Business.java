@@ -1,20 +1,55 @@
 package ca.ece.ubc.cpen221.mp5;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-public interface Business {
+import javax.json.JsonObject;
+import javax.json.JsonValue;
+
+public class Business {
+	protected String name;
+	protected Set<Review> reviews;
+	protected boolean open;
+	protected String idStr;
+	protected double longitude;
+	protected double latitude;
+	protected double rating;
 	
-	public String getId();
+	public Business(JsonObject info){
+		this.idStr = info.getString("business_id");
+		this.name = info.getString("name");
+		this.rating = info.getJsonNumber("stars").doubleValue();
+		this.open = info.getBoolean("open");
+		this.longitude = info.getJsonNumber("longitude").doubleValue();
+		this.latitude = info.getJsonNumber("latitude").doubleValue();
+
+		this.reviews = new HashSet<Review>();
+	}
 	
-	public String getName();
+	public String getId() {
+		return this.idStr;
+	}
 	
-	public Set<Review> getReviews();
+	public String getName() {
+		return new String(name);
+	}
 	
-	public boolean addReview(Review rev);
+	public double[] getLocation() {
+		double[] location = {latitude, longitude};
+		return location;
+	}
 	
-	public double[] getLocation();
+	public boolean addReview(Review rev) {
+		return reviews.add(rev);
+	}
 	
-	public Boolean isOpen();
+	public Set<Review> getReviews(){
+		return new HashSet<>(this.reviews);
+	}
+	
+	public Boolean isOpen() {
+		return open;
+	}
 }
