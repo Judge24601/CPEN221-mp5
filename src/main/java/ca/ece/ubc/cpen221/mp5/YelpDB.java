@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.function.ToDoubleBiFunction;
 import javax.json.*;
 
-public class YelpDB<Business> implements MP5Db{
+public class YelpDB<T> implements MP5Db{
 
 	private Map<String, Business> businesses;
 	private Map<String, User> users;
