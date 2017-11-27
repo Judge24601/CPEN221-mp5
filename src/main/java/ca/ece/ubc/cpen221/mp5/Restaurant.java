@@ -1,4 +1,6 @@
 package ca.ece.ubc.cpen221.mp5;
+import javax.json.JsonObject;
+import javax.json.JsonValue;
 import java.util.*;
 public class Restaurant implements Business{
 
@@ -9,6 +11,13 @@ public class Restaurant implements Business{
 	private Map<String, Number> informationNumber;
 	private Map<String, List<String>> informationList;
 	private boolean open;
+	private String url;
+	private String idStr;
+	private long longitude;
+	private List<JsonValue> neighbourhoods;
+	private List<JsonValue> categories;
+	private double price;
+	private double rating;
 	
 	public Restaurant(long id, String name, Set<Review> reviews, Map<String, String> informationString, Map<String, Integer> informationNumber, Map<String, List<String>> informationList, boolean open) {
 		this.id = id;
@@ -18,6 +27,25 @@ public class Restaurant implements Business{
 		//this.informationNumber = informationNumber;
 		this.informationList = informationList;
 		this.open = open;
+	}
+
+	public Restaurant(JsonObject info){
+		this.idStr = info.getString("business_id");
+		this.name = info.getString("name");
+		this.price = info.getInt("price");
+		this.rating = info.getInt("stars");
+		this.open = info.getBoolean("open");
+		this.url = info.getString("url");
+		this.longitude = info.getInt("longitude");
+
+		this.neighbourhoods = new ArrayList<>();
+		for(JsonValue jval : info.getJsonArray("neigborhoods"))neighbourhoods.add(jval);
+
+		this.categories = new ArrayList<>();
+		for(JsonValue jval : info.getJsonArray("categories"))categories.add(jval);
+
+
+		//do smth abt reviews, maybe also number of reviews??
 	}
 	
 	public long getId() {
