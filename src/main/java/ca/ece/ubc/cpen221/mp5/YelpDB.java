@@ -10,11 +10,15 @@ public class YelpDB<Business> implements MP5Db{
 		//YelpDB<Restaurant> myDB = new YelpDB<>("restaurants.json", "reviews.json", "users.json");
 
 		try{
-			System.out.println(jsonParse("data/restaurants.json"));
+			List<JsonObject> myList = jsonParse("data/restaurants.json");
+			for(JsonObject obj : myList){
+				System.out.println(obj);
+			}
 		}catch (IOException e){
 			System.out.println("whoopsie");
 		}
 
+		// new StringReader( docScan.nextLine() ) ;
 	}
 	
 	public YelpDB(String restaurantFile, String reviewFile, String userFile){
@@ -23,18 +27,18 @@ public class YelpDB<Business> implements MP5Db{
 	
 	private List<String> specialTypes = Arrays.asList("open", "business_id", "name");
 	
-	private static Map<String, String> jsonParse(String fileName) throws IOException {
+	private static List<JsonObject> jsonParse(String fileName) throws IOException {
 		Scanner sc = new Scanner(new FileInputStream(fileName));
-		JsonReader
-		Map<String, String> typeResultMap = new HashMap<String, String>();
-		while(sc.hasNextLine()) {
-			String line = sc.nextLine();
-			String[] split = line.replaceAll("{}", "").split(",");
-			for(int i = 0; i < split.length; i+=2) {
-				typeResultMap.put(split[i], split[i+1]);
-			}
+		JsonReader readJson;
+		List<JsonObject> jsonList = new ArrayList<>();
+
+		while(sc.hasNext()){
+			readJson = Json.createReader(new StringReader(sc.nextLine()));
+			JsonObject temp = readJson.readObject();
+			jsonList.add(temp);
 		}
-		return typeResultMap;
+
+		return jsonList;
 	}
 	
 	public Set<Business> getMatches(String queryString){
