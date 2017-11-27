@@ -1,7 +1,21 @@
 package ca.ece.ubc.cpen221.mp5;
 import java.util.*;
 import java.io.*;
+import java.util.function.ToDoubleBiFunction;
+import javax.json.*;
+
 public class YelpDB<Business> implements MP5Db{
+
+	public static void main(String [] args){
+		//YelpDB<Restaurant> myDB = new YelpDB<>("restaurants.json", "reviews.json", "users.json");
+
+		try{
+			System.out.println(jsonParse("data/restaurants.json"));
+		}catch (IOException e){
+			System.out.println("whoopsie");
+		}
+
+	}
 	
 	public YelpDB(String restaurantFile, String reviewFile, String userFile){
 		
@@ -9,8 +23,9 @@ public class YelpDB<Business> implements MP5Db{
 	
 	private List<String> specialTypes = Arrays.asList("open", "business_id", "name");
 	
-	private Map<String, String> JSONparse(String fileName) throws IOException {
-		Scanner sc = new Scanner(new File(fileName));
+	private static Map<String, String> jsonParse(String fileName) throws IOException {
+		Scanner sc = new Scanner(new FileInputStream(fileName));
+		JsonReader
 		Map<String, String> typeResultMap = new HashMap<String, String>();
 		while(sc.hasNextLine()) {
 			String line = sc.nextLine();

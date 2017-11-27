@@ -15,7 +15,7 @@ public class Restaurant implements Business{
 		this.name = name;
 		this.reviews = reviews;
 		this.informationString = informationString;
-		this.informationNumber = informationNumber;
+		//this.informationNumber = informationNumber;
 		this.informationList = informationList;
 		this.open = open;
 	}
