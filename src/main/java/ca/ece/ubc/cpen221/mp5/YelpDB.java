@@ -94,9 +94,14 @@ public class YelpDB<T> implements MP5Db{
 		return null; //Change this
 	}
 	
+	public String request(String queryString) {
+		return null;
+	}
+	
 	public String kMeansClusters_json(int k) {
 		return null; //Change this
 	}
+	
 	/**
 	 * Takes the current data from a specified user's reviews, and generates
 	 * a predictor function based on the price of a restaurant, to determine
@@ -105,9 +110,10 @@ public class YelpDB<T> implements MP5Db{
 	 * @returns function of two paramaters, a database and string, to determine 
 	 * @throws IllegalArgumentException if a prediction cannot be made
 	 */
+	@SuppressWarnings("unchecked")
 	public ToDoubleBiFunction<MP5Db<Business>, String> getPredictorFunction(String user){
 		/*
-		 * x = priciness (probably?)
+		 * x = priciness 
 		 * y = rating
 		 * Sxx = (sum) (xi - mean(x))2
 		 * Syy = (sum) (yi - mean(y))2
