@@ -11,7 +11,7 @@ public class YelpDBTest {
 	@Test
 	public void initTest() {
 		try {
-			MP5Db db = new YelpDB<Business>("data/restaurants.json", "data/reviews.json", "data/users.json");
+			MP5Db<Business> db = new YelpDB("data/restaurants.json", "data/reviews.json", "data/users.json");
 			}catch(IOException e) {
 				fail();
 		}
