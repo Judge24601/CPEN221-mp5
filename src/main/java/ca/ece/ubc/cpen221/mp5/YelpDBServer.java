@@ -19,14 +19,14 @@ public class YelpDBServer {
 	//Default Port Number
 	public static final int PORT_NUM = 4949;
 	private ServerSocket serverSocket;
-	private YelpDB<Business> database;
+	private YelpDB database;
 	/**
 	 * Make a YelpDbServer that listens for connections on port.
 	 * 
 	 * @param port
 	 *            port number, requires 0 <= port <= 65535
 	 */
-	public YelpDBServer(int port, YelpDB<Business> db) throws IOException{
+	public YelpDBServer(int port, YelpDB db) throws IOException{
 		serverSocket = new ServerSocket(port);
 		database = db;
 	}

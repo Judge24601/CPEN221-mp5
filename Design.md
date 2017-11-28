@@ -1,10 +1,10 @@
-## Restaurant
+## Restaurant (Extends Business)
 ### Rep Invariant
 * id is not null
 * name is not null
 * Reviews has no null entries and is not null
 * Location is not null and is unique
-* Every key in the information maps has non-null value associated with it
+* Open value cannot be null
 ### Abstraction Function
 Represents a restaurant as an id with associated name, location, reviews, and other information, where associated type produces a result
 
@@ -26,13 +26,15 @@ Represents review as id, text, and rating
 
 # Database
 * Set of Users
-* Set of Restaurants
+* Set of Businesses
+* Set of Reviews
 * Map of Reviews -> Users
 * Map of Reviews -> Restaurants
 
 ### Rep Invariant
 * users is not null and contains no null entries
 * restaurants is not null and contains no null entries
+* reviews is not null and contains no null entries
 * Maps contain all reviews contained by users and restaurants
 * If user in users has review, Map must map review to user
 * If restaurant in restaurants has review, Map must map review to restaurant

@@ -5,17 +5,17 @@ import java.util.function.Function;
 import java.util.function.ToDoubleBiFunction;
 import javax.json.*;
 
-public class YelpDB<T> implements MP5Db{
+public class YelpDB implements MP5Db<Business>{
 
-	private Map<String, T> objects;
+	private Map<String, Business> objects;
 	private Map<String, User> users;
 	private Map<String, Review> reviews;
-	private Map<Review, T> tLookup;
+	private Map<Review, Business> busLookup;
 	private Map<Review, User> userLookup;
 	
 	/**
 	 * Constructs the database from 3 Json Files
-	 * Currently only works for a database of businesses
+	 * Currently only works for a database of business (constructs restaurants booooooo)
 	 * Will see if can make more generic later
 	 * @param restaurantFile - name of JSON file containing restaurant data
 	 * @param reviewFile - name of JSON file containing review data
@@ -28,7 +28,7 @@ public class YelpDB<T> implements MP5Db{
 		this.objects = new HashMap<>();
 		this.reviews = new HashMap<>();
 		this.users = new HashMap<>();
-		this.tLookup = new HashMap<>();
+		this.busLookup = new HashMap<>();
 		this.userLookup = new HashMap<>();
 
 		//parse each file to get list of JSON objects, then store those in a map name (or id?) --> object
@@ -37,11 +37,11 @@ public class YelpDB<T> implements MP5Db{
 		temp = jsonParse(restaurantFile);
 		temp.parallelStream()
 			.map(x -> buildRestaurant(x))
-			.forEach((x -> objects.put(x.getId(), (T) x)));
+			.forEach((x -> objects.put(x.getId(), x)));
 		/*
 		for(JsonObject obj : temp){
 			Business business = buildRestaurant(obj);
-			objects.put(business.getId(), (T) business);
+			objects.put(business.getId(), business);
 		}
 		*/
 
@@ -67,7 +67,7 @@ public class YelpDB<T> implements MP5Db{
 			
 			String businessID = obj.getString("business_id");
 			Business currentBus = (Business) objects.get(businessID);
-			this.tLookup.put(review, objects.get(businessID));
+			this.busLookup.put(review, objects.get(businessID));
 			currentBus.addReview(review);
 		}
 	}
@@ -97,7 +97,7 @@ public class YelpDB<T> implements MP5Db{
 		return new Restaurant(obj);
 	}	
 	
-	public Set<T> getMatches(String queryString){
+	public Set<Business> getMatches(String queryString){
 		return null; //Change this
 	}
 	
@@ -142,7 +142,7 @@ public class YelpDB<T> implements MP5Db{
 				List<Double> prices = new ArrayList<Double>();
 				List<Double> ratings = new ArrayList<Double>();
 				for(Review rev: dude.getReviews()) {
-					Business business = (Business) tLookup.get(rev.id);
+					Business business = busLookup.get(rev.id);
 					double price = business.getPrice();
 					meanX += price;
 					prices.add(price);
@@ -160,6 +160,6 @@ public class YelpDB<T> implements MP5Db{
 				}
 				double a = meanY - b*meanX;
 				double r_2 = (sxy*sxy)/(sxx*syy);
-				return (x, y) -> a*((YelpDB<Business>)x).objects.get(y).getPrice() + b;
+				return (x, y) -> a*((YelpDB)x).objects.get(y).getPrice() + b;
 	}
 }
