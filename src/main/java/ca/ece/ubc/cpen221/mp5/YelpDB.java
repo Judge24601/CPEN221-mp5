@@ -9,6 +9,8 @@ public class YelpDB<T> implements MP5Db{
 	private Map<String, T> objects;
 	private Map<String, User> users;
 	private Map<String, Review> reviews;
+	private Map<Review, T> tLookup;
+	private Map<Review, User> userLookup;
 	
 	/**
 	 * Constructs the database from 3 Json Files
@@ -25,14 +27,18 @@ public class YelpDB<T> implements MP5Db{
 		this.objects = new HashMap<>();
 		this.reviews = new HashMap<>();
 		this.users = new HashMap<>();
+		this.tLookup = new HashMap<>();
+		this.userLookup = new HashMap<>();
 
 		//parse each file to get list of JSON objects, then store those in a map name (or id?) --> object
 
 		List<JsonObject> temp = new ArrayList<>();
 		temp = jsonParse(restaurantFile);
 		for(JsonObject obj : temp){
-			Business business =  new Restaurant(obj);
-			objects.put(business.getId(), (T) business);
+			if(obj instanceof Business) {
+				Business business = buildRestaurant(obj);
+				objects.put(business.getId(), (T) business);
+			}
 		}
 
 		temp = jsonParse(userFile);
@@ -49,9 +55,11 @@ public class YelpDB<T> implements MP5Db{
 			//putting reviews into users, restaurants
 			String userID = obj.getString("user_id");
 			users.get(userID).addReview(review);
-
+			this.userLookup.put(review, users.get(userID));
+			
 			String businessID = obj.getString("business_id");
 			Business currentBus = (Business) objects.get(businessID);
+			this.tLookup.put(review, objects.get(businessID));
 			currentBus.addReview(review);
 		}
 	}
@@ -77,7 +85,11 @@ public class YelpDB<T> implements MP5Db{
 		return jsonList;
 	}
 	
-	public Set<Business> getMatches(String queryString){
+	private Business buildRestaurant(JsonObject obj) {
+		return new Restaurant(obj);
+	}	
+	
+	public Set<T> getMatches(String queryString){
 		return null; //Change this
 	}
 	
@@ -86,6 +98,38 @@ public class YelpDB<T> implements MP5Db{
 	}
 	
 	public ToDoubleBiFunction<MP5Db<Business>, String> getPredictorFunction(String user){
+		/*
+		 * x = priciness (probably?)
+		 * y = rating
+		 * Sxx = (sum) (xi - mean(x))2
+		 * Syy = (sum) (yi - mean(y))2
+		 * Sxy = (sum) (xi - mean(x))(yi - mean(y))
+		 * 
+		 * b = Sxy / Sxx
+		 * a = mean(y) - b * mean(x)
+		 * R2 = Sxy2 / (Sxx Syy)
+		 */
+		User dude = users.get(user);
+		double meanY = (dude.getReviews().stream()
+				.map(x -> x.rating)
+				.reduce(0.0, (x, y) -> x+y))/dude.getReviews().size();
+		double syy = (dude.getReviews().stream()
+				.map(x -> x.rating)
+				.reduce(0.0, (x, y) -> x + Math.pow((y - meanY), 2.0)));
+		Map<String, Business> businesses = (Map<String, Business>) objects;
+		double meanX = 0.0;
+		List<Double> prices = new ArrayList<Double>();
+		for(Review rev: dude.getReviews()) {
+			Business business = (Business) tLookup.get(rev.id);
+			double price = business.getPrice();
+			meanX += price;
+			prices.add(price);
+		}
+		double sxx = 0.0;
+		for(Double price: prices) {
+			sxx += Math.pow(price - meanX, 2.0);
+		}
+		
 		return null; //Change this
 	}
 }
