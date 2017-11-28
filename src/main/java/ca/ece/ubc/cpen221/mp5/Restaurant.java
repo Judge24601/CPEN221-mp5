@@ -20,7 +20,7 @@ public class Restaurant implements Business{
 	public Restaurant(JsonObject info){
 		this.idStr = info.getString("business_id");
 		this.name = info.getString("name");
-		this.price = info.getInt("price");
+		this.price = info.getJsonNumber("price").doubleValue();
 		this.rating = info.getInt("stars");
 		this.open = info.getBoolean("open");
 		this.url = info.getString("url");
@@ -64,5 +64,9 @@ public class Restaurant implements Business{
 	}
 	public Boolean isOpen() {
 		return open;
+	}
+	
+	public double getPrice() {
+		return this.price;
 	}
 }
