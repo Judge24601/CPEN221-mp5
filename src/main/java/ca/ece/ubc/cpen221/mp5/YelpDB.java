@@ -1,6 +1,7 @@
 package ca.ece.ubc.cpen221.mp5;
 import java.util.*;
 import java.io.*;
+import java.util.function.Function;
 import java.util.function.ToDoubleBiFunction;
 import javax.json.*;
 
@@ -96,7 +97,14 @@ public class YelpDB<T> implements MP5Db{
 	public String kMeansClusters_json(int k) {
 		return null; //Change this
 	}
-	
+	/**
+	 * Takes the current data from a specified user's reviews, and generates
+	 * a predictor function based on the price of a restaurant, to determine
+	 * that user's general rating for a restaurant of x price.
+	 * @param user - user to predict behaviour of
+	 * @returns function of two paramaters, a database and string, to determine 
+	 * @throws IllegalArgumentException if a prediction cannot be made
+	 */
 	public ToDoubleBiFunction<MP5Db<Business>, String> getPredictorFunction(String user){
 		/*
 		 * x = priciness (probably?)
@@ -109,27 +117,36 @@ public class YelpDB<T> implements MP5Db{
 		 * a = mean(y) - b * mean(x)
 		 * R2 = Sxy2 / (Sxx Syy)
 		 */
-		User dude = users.get(user);
-		double meanY = (dude.getReviews().stream()
-				.map(x -> x.rating)
-				.reduce(0.0, (x, y) -> x+y))/dude.getReviews().size();
-		double syy = (dude.getReviews().stream()
-				.map(x -> x.rating)
-				.reduce(0.0, (x, y) -> x + Math.pow((y - meanY), 2.0)));
-		Map<String, Business> businesses = (Map<String, Business>) objects;
-		double meanX = 0.0;
-		List<Double> prices = new ArrayList<Double>();
-		for(Review rev: dude.getReviews()) {
-			Business business = (Business) tLookup.get(rev.id);
-			double price = business.getPrice();
-			meanX += price;
-			prices.add(price);
-		}
-		double sxx = 0.0;
-		for(Double price: prices) {
-			sxx += Math.pow(price - meanX, 2.0);
-		}
-		
-		return null; //Change this
+				User dude = users.get(user);
+				double meanY = (dude.getReviews().stream()
+						.map(x -> x.rating)
+						.reduce(0.0, (x, y) -> x+y))/dude.getReviews().size();
+				double syy = (dude.getReviews().stream()
+						.map(x -> x.rating)
+						.reduce(0.0, (x, y) -> x + Math.pow((y - meanY), 2.0)));
+				Map<String, Business> businesses = (Map<String, Business>) objects;
+				double meanX = 0.0;
+				List<Double> prices = new ArrayList<Double>();
+				List<Double> ratings = new ArrayList<Double>();
+				for(Review rev: dude.getReviews()) {
+					Business business = (Business) tLookup.get(rev.id);
+					double price = business.getPrice();
+					meanX += price;
+					prices.add(price);
+					ratings.add(rev.rating);
+				}
+				double sxx = 0.0;
+				double sxy = 0.0;
+				for(int i = 0; i < prices.size(); i++) {
+					sxx += Math.pow(prices.get(i) - meanX, 2.0);
+					sxy += ((prices.get(i)) - meanX)*(ratings.get(i) - meanY);
+				}
+				double b = sxy/sxx;
+				if(b == Double.NaN) {
+					throw new IllegalArgumentException();
+				}
+				double a = meanY - b*meanX;
+				double r_2 = (sxy*sxy)/(sxx*syy);
+				return (x, y) -> a*((YelpDB<Business>)x).objects.get(y).getPrice() + b;
 	}
 }
