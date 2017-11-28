@@ -137,7 +137,6 @@ public class YelpDB implements MP5Db<Business>{
 				double syy = (dude.getReviews().stream()
 						.map(x -> x.rating)
 						.reduce(0.0, (x, y) -> x + Math.pow((y - meanY), 2.0)));
-				Map<String, Business> businesses = (Map<String, Business>) businesses;
 				double meanX = 0.0;
 				List<Double> prices = new ArrayList<Double>();
 				List<Double> ratings = new ArrayList<Double>();
