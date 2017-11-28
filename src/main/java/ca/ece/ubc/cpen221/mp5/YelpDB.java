@@ -7,7 +7,7 @@ import javax.json.*;
 
 public class YelpDB implements MP5Db<Business>{
 
-	private Map<String, Business> businesses;
+	private Map<String, Business> objects;
 	private Map<String, User> users;
 	private Map<String, Review> reviews;
 	private Map<Review, Business> busLookup;
@@ -21,27 +21,27 @@ public class YelpDB implements MP5Db<Business>{
 	 * @param reviewFile - name of JSON file containing review data
 	 * @param userFile - name of JSON file containing user data
 	 * @modifies this - creates business/review/user map, and creates the individual
-	 * businesses/users/reviews as businesses
+	 * businesses/users/reviews as objects
 	 */
 	
 	public YelpDB(String restaurantFile, String reviewFile, String userFile) throws IOException{
-		this.businesses = new HashMap<>();
+		this.objects = new HashMap<>();
 		this.reviews = new HashMap<>();
 		this.users = new HashMap<>();
 		this.busLookup = new HashMap<>();
 		this.userLookup = new HashMap<>();
 
-		//parse each file to get list of JSON businesses, then store those in a map name (or id?) --> object
+		//parse each file to get list of JSON objects, then store those in a map name (or id?) --> object
 
 		List<JsonObject> temp = new ArrayList<>();
 		temp = jsonParse(restaurantFile);
 		temp.parallelStream()
 			.map(x -> buildRestaurant(x))
-			.forEach((x -> businesses.put(x.getId(), x)));
+			.forEach((x -> objects.put(x.getId(), x)));
 		/*
 		for(JsonObject obj : temp){
 			Business business = buildRestaurant(obj);
-			businesses.put(business.getId(), business);
+			objects.put(business.getId(), business);
 		}
 		*/
 
@@ -66,8 +66,8 @@ public class YelpDB implements MP5Db<Business>{
 			this.userLookup.put(review, users.get(userID));
 			
 			String businessID = obj.getString("business_id");
-			Business currentBus = (Business) businesses.get(businessID);
-			this.busLookup.put(review, businesses.get(businessID));
+			Business currentBus = (Business) objects.get(businessID);
+			this.busLookup.put(review, objects.get(businessID));
 			currentBus.addReview(review);
 		}
 	}
@@ -76,7 +76,7 @@ public class YelpDB implements MP5Db<Business>{
 	/**
 	 * 
 	 * @param fileName - path for file
-	 * @return List of JSONbusinesses from the file
+	 * @return List of JSONObjects from the file
 	 * @throws IOException if file does not exist
 	 */
 	private static List<JsonObject> jsonParse(String fileName) throws IOException {
@@ -137,7 +137,7 @@ public class YelpDB implements MP5Db<Business>{
 				double syy = (dude.getReviews().stream()
 						.map(x -> x.rating)
 						.reduce(0.0, (x, y) -> x + Math.pow((y - meanY), 2.0)));
-				Map<String, Business> businesses = (Map<String, Business>) businesses;
+				Map<String, Business> businesses = (Map<String, Business>) objects;
 				double meanX = 0.0;
 				List<Double> prices = new ArrayList<Double>();
 				List<Double> ratings = new ArrayList<Double>();
@@ -160,6 +160,6 @@ public class YelpDB implements MP5Db<Business>{
 				}
 				double a = meanY - b*meanX;
 				double r_2 = (sxy*sxy)/(sxx*syy);
-				return (x, y) -> a*((YelpDB)x).businesses.get(y).getPrice() + b;
+				return (x, y) -> a*((YelpDB)x).objects.get(y).getPrice() + b;
 	}
 }
