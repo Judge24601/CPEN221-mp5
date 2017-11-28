@@ -1,6 +1,7 @@
 package ca.ece.ubc.cpen221.mp5;
 
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -15,6 +16,8 @@ import java.net.Socket;
  *
  */
 public class YelpDBServer {
+	//Default Port Number
+	private static final int PORT_NUM = 4949;
 	private ServerSocket serverSocket;
 	private YelpDB<Business> database;
 	/**
@@ -50,6 +53,28 @@ public class YelpDBServer {
 	}
 	
 	public void handle(Socket socket) throws IOException{
-		
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				socket.getInputStream()));
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(
+				socket.getOutputStream()), true);
+		try {
+			for(String line = in.readLine(); line != null; line = in.readLine()) {
+				System.err.println("Query: "+ line);
+				String result = database.request(line);
+				out.println(result);
+			}
+		}finally {
+			in.close();
+			out.close();
+		}
+	}
+	
+	public static void main(String[] args) {
+		try {
+			YelpDBServer server = new YelpDBServer(PORT_NUM, new YelpDB("data/restaurants.json", "data/reviews.json", "data/users.json"));
+			server.serve();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
