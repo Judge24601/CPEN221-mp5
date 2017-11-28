@@ -12,7 +12,7 @@ public class YelpDB implements MP5Db<Business>{
 	private Map<String, Review> reviews;
 	private Map<Review, Business> busLookup;
 	private Map<Review, User> userLookup;
-	
+	//TODO: Figure out how to construct Businesses (Abstract class???)
 	/**
 	 * Constructs the database from 3 Json Files
 	 * Currently only works for a database of business (constructs restaurants booooooo)
