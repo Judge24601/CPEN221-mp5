@@ -16,5 +16,7 @@ public interface Business {
 	
 	public double[] getLocation();
 	
+	public double getPrice();
+	
 	public Boolean isOpen();
 }

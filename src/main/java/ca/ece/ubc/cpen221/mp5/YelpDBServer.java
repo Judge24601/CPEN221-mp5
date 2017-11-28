@@ -17,7 +17,7 @@ import java.net.Socket;
  */
 public class YelpDBServer {
 	//Default Port Number
-	private static final int PORT_NUM = 4949;
+	public static final int PORT_NUM = 4949;
 	private ServerSocket serverSocket;
 	private YelpDB<Business> database;
 	/**
@@ -53,6 +53,7 @@ public class YelpDBServer {
 	}
 	
 	public void handle(Socket socket) throws IOException{
+		System.err.println("client connected");
 		BufferedReader in = new BufferedReader(new InputStreamReader(
 				socket.getInputStream()));
 		PrintWriter out = new PrintWriter(new OutputStreamWriter(

@@ -36,10 +36,8 @@ public class YelpDB<T> implements MP5Db{
 		List<JsonObject> temp = new ArrayList<>();
 		temp = jsonParse(restaurantFile);
 		for(JsonObject obj : temp){
-			if(obj instanceof Business) {
-				Business business = buildRestaurant(obj);
-				objects.put(business.getId(), (T) business);
-			}
+			Business business = buildRestaurant(obj);
+			objects.put(business.getId(), (T) business);
 		}
 
 		temp = jsonParse(userFile);
@@ -95,7 +93,7 @@ public class YelpDB<T> implements MP5Db{
 	}
 	
 	public String request(String queryString) {
-		return null;
+		return "Yooooo"; //Change this
 	}
 	
 	public String kMeansClusters_json(int k) {
