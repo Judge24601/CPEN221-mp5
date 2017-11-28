@@ -35,17 +35,26 @@ public class YelpDB<T> implements MP5Db{
 
 		List<JsonObject> temp = new ArrayList<>();
 		temp = jsonParse(restaurantFile);
+		temp.parallelStream()
+			.map(x -> buildRestaurant(x))
+			.forEach((x -> objects.put(x.getId(), (T) x)));
+		/*
 		for(JsonObject obj : temp){
 			Business business = buildRestaurant(obj);
 			objects.put(business.getId(), (T) business);
 		}
+		*/
 
-		temp = jsonParse(userFile);
+		List<JsonObject> temp1 = jsonParse(userFile);
+		temp1.parallelStream()
+			.map(x -> new User(x))
+			.forEach(x -> users.put(x.getId(), x));
+		/*
 		for(JsonObject obj : temp){
 			User user = new User(obj);
 			users.put(user.getId(), user);
 		}
-
+		*/
 		temp = jsonParse(reviewFile);
 		for(JsonObject obj : temp){
 			Review review = new Review(obj);
