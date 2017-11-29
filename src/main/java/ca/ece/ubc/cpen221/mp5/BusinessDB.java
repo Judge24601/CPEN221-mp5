@@ -29,16 +29,15 @@ public abstract class BusinessDB implements MP5Db<Business>{
 		this.busLookup = new HashMap<>();
 		this.userLookup = new HashMap<>();
 		List<JsonObject> temp1 = jsonParse(userFile);
-		/*
 		temp1.stream()
 			.map(x -> new User(x))
 			.forEach(x -> users.put(x.getId(), x));
-		*/
+		/*
 		for(JsonObject obj : temp1){
-			User user = new User(obj);
+			User user = new User(obj);g
 			users.put(user.getId(), user);
 		}
-		
+		*/
 		List<JsonObject>temp = jsonParse(reviewFile);
 		for(JsonObject obj : temp){
 			Review review = new Review(obj);
