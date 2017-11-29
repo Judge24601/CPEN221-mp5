@@ -5,6 +5,7 @@ import java.util.function.Function;
 import java.util.function.ToDoubleBiFunction;
 import javax.json.*;
 
+
 public class YelpDB extends BusinessDB{
 	//TODO: Figure out how to construct Businesses (Abstract class???)
 	/**
@@ -15,13 +16,13 @@ public class YelpDB extends BusinessDB{
 	 * @param reviewFile - name of JSON file containing review data
 	 * @param userFile - name of JSON file containing user data
 	 * @modifies this - creates business/review/user map, and creates the individual
-	 * businesses/users/reviews as businesses
+	 * businesses/users/reviews as objects
 	 */
 	
-	public YelpDB(String restaurantFile, String reviewFile, String userFile) throws IOException{
+	public YelpDB(String restaurantFile, String reviewFile, String userFile) throws IOException{  
 		super(reviewFile, userFile);
 
-		//parse each file to get list of JSON businesses, then store those in a map name (or id?) --> object
+		//parse each file to get list of JSON objects, then store those in a map name (or id?) --> object
 
 		List<JsonObject> temp = new ArrayList<>();
 		temp = jsonParse(restaurantFile);
@@ -39,7 +40,6 @@ public class YelpDB extends BusinessDB{
 	}
 	
 	//private List<String> specialTypes = Arrays.asList("open", "business_id", "name");
-
 	
 	private Restaurant buildBusiness(JsonObject obj) {
 		return new Restaurant(obj);
@@ -48,5 +48,4 @@ public class YelpDB extends BusinessDB{
 	public String request(String queryString) {
 		return "Yooooo"; //Change this
 	}
-	
 }
