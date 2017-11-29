@@ -9,7 +9,7 @@ public class User {
 
 	private String id;
 	private String name;
-	private Set<Review> reviews;
+	private Set<String> reviews;
 	
 	public User(JsonObject info) {
 		this.id = info.getString("user_id");
@@ -17,11 +17,11 @@ public class User {
 		reviews = new HashSet<>();
 	}
 
-	public boolean addReview(Review review){
-		return reviews.add(review);
+	public boolean addReview(String reviewId){
+		return reviews.add(reviewId);
 	}
 
-	public Set<Review> getReviews() {
+	public Set<String> getReviews() {
 		return new HashSet<>(reviews);
 	}
 
@@ -30,12 +30,10 @@ public class User {
 	}
 
 	public String getId() {
-		String copy = id;
-		return copy;
+		return new String(id);
 	}
 
 	public String getName() {
-		String copy = name;
-		return copy;
+		return new String(name);
 	}
 }

@@ -6,7 +6,7 @@ import java.util.*;
 public class Restaurant implements Business{
 
 	private String name;
-	private Set<Review> reviews;
+	private Set<String> reviews;
 	private boolean open;
 	private String url;
 	private String idStr;
@@ -39,7 +39,7 @@ public class Restaurant implements Business{
 			neighbourhoods.add(arr2.getString(i));
 		}
 
-		this.reviews = new HashSet<Review>();
+		this.reviews = new HashSet<String>();
 	}
 	
 	public String getId() {
@@ -55,12 +55,12 @@ public class Restaurant implements Business{
 		return location;
 	}
 	
-	public Set<Review> getReviews(){
+	public Set<String> getReviews(){
 		return new HashSet<>(this.reviews);
 	}
 	
-	public boolean addReview(Review rev) {
-		return reviews.add(rev);
+	public boolean addReview(String id) {
+		return reviews.add(id);
 	}
 	public Boolean isOpen() {
 		return open;
