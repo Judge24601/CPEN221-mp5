@@ -25,9 +25,9 @@ Represents a user as an id and name, with associated reviews
 Represents review as id, text, and rating
 
 # Database
-* Set of Users
-* Set of Businesses
-* Set of Reviews
+* Map of user Ids ->Users
+* Map of business Ids ->Businesses
+* Map of review Ids ->Reviews
 * Map of Reviews -> Users
 * Map of Reviews -> Restaurants
 
