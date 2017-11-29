@@ -20,17 +20,12 @@ public class YelpDB extends BusinessDB{
 	
 	public YelpDB(String restaurantFile, String reviewFile, String userFile) throws IOException{
 		super(reviewFile, userFile);
-		this.businesses = new HashMap<>();
-		this.reviews = new HashMap<>();
-		this.users = new HashMap<>();
-		this.busLookup = new HashMap<>();
-		this.userLookup = new HashMap<>();
 
 		//parse each file to get list of JSON businesses, then store those in a map name (or id?) --> object
 
 		List<JsonObject> temp = new ArrayList<>();
 		temp = jsonParse(restaurantFile);
-		temp.parallelStream()
+		temp.stream()
 			.map(x -> buildBusiness(x))
 			.forEach((x -> businesses.put(x.getId(), x)));
 		List<JsonObject>temp1 = jsonParse(reviewFile);

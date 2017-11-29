@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -21,17 +22,23 @@ public abstract class BusinessDB implements MP5Db<Business>{
 	protected Map<String, String> busLookup; //Review to Business
 	protected Map<String, String> userLookup; //Review to User
 	
-	public BusinessDB(String userFile, String reviewFile) throws IOException {
+	public BusinessDB(String reviewFile, String userFile) throws IOException {
+		this.businesses = new HashMap<>();
+		this.reviews = new HashMap<>();
+		this.users = new HashMap<>();
+		this.busLookup = new HashMap<>();
+		this.userLookup = new HashMap<>();
 		List<JsonObject> temp1 = jsonParse(userFile);
-		temp1.parallelStream()
+		/*
+		temp1.stream()
 			.map(x -> new User(x))
 			.forEach(x -> users.put(x.getId(), x));
-		/*
-		for(JsonObject obj : temp){
+		*/
+		for(JsonObject obj : temp1){
 			User user = new User(obj);
 			users.put(user.getId(), user);
 		}
-		*/
+		
 		List<JsonObject>temp = jsonParse(reviewFile);
 		for(JsonObject obj : temp){
 			Review review = new Review(obj);
