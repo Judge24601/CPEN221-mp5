@@ -10,9 +10,9 @@ public interface Business {
 	
 	public String getName();
 	
-	public Set<Review> getReviews();
+	public Set<String> getReviews();
 	
-	public boolean addReview(Review rev);
+	public boolean addReview(String id);
 	
 	public double[] getLocation();
 	
