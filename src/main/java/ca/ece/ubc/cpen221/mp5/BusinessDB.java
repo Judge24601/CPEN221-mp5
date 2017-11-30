@@ -84,7 +84,6 @@ public abstract class BusinessDB implements MP5Db<Business>{
 	 * @returns function of two paramaters, a database and string, to determine 
 	 * @throws IllegalArgumentException if a prediction cannot be made
 	 */
-	@SuppressWarnings("unchecked")
 	public ToDoubleBiFunction<MP5Db<Business>, String> getPredictorFunction(String user){
 		/*
 		 * x = priciness 
@@ -127,6 +126,7 @@ public abstract class BusinessDB implements MP5Db<Business>{
 					throw new IllegalArgumentException();
 				}
 				double a = meanY - b*meanX;
+				@SuppressWarnings("unused")
 				double r_2 = (sxy*sxy)/(sxx*syy);
 				return (x, y) -> a*((BusinessDB)x).businesses.get(y).getPrice() + b;
 	}

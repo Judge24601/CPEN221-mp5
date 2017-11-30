@@ -4,7 +4,6 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.json.JsonValue;
 import java.util.*;
 public class Restaurant implements Business{
 	private static Long id = 0l;

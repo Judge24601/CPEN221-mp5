@@ -3,7 +3,6 @@ package ca.ece.ubc.cpen221.mp5;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.print.attribute.standard.MediaSize.Other;
 
 public class Review {
 	private static Long baseId = 0l;
