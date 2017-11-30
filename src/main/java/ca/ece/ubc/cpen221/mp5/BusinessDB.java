@@ -3,12 +3,7 @@ package ca.ece.ubc.cpen221.mp5;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.function.ToDoubleBiFunction;
 
 import javax.json.Json;
@@ -73,7 +68,154 @@ public abstract class BusinessDB implements MP5Db<Business>{
 	
 	
 	public String kMeansClusters_json(int k) {
+		Set<Centroid> centres = new HashSet<>();
+		Map<Centroid, Cluster> clusters = new HashMap<>();
+		Map<Centroid, Cluster> oldClusters = new HashMap<>();
+
+		//make k random centroids
+		Iterator<String> itr = businesses.keySet().iterator();
+		for(int i = 0; i < k; i++){
+			Centroid newCentre;
+
+			//assigning first centroids to first restaurant locations, to ensure no empties
+			//also, makes sure that no two centroids have the same location
+			do{
+				if(itr.hasNext()) {
+					Business temp = businesses.get(itr.next());
+					newCentre = new Centroid(temp.getLocation());
+				}else {
+					return "too many clusters!";
+				}
+			}while(centres.contains(newCentre));
+
+			centres.add(newCentre);
+		}
+
+		//ASSIGNING RESTAURANTS TO CLUSTERS
+		clusters = assign(centres);
+		oldClusters.putAll(clusters);
+
+		///SORTING THE CLUSTERS + REASSIGNING/////////////////
+		while(true){
+			//find the new centre of each cluster, make new set of centroids
+			centres.clear();
+			for(Centroid centroid : clusters.keySet()){
+				//get the cluster, find its centre, add new centroid at that point to list
+				double[] location = clusters.get(centroid).getCentre();
+				centres.add(new Centroid(location));
+			}
+
+			clusters = assign(centres);
+			if(clusters.equals(oldClusters)) break;
+			oldClusters.putAll(clusters);
+		}
+		
+		//convert clusters to JSON
+
 		return null; //Change this
+	}
+
+	/**
+	 * Assigns restaurants to clusters based on location
+	 * @param centres
+	 * @return
+	 */
+	private Map<Centroid, Cluster> assign(Set<Centroid> centres){
+		Map<Centroid, Cluster> clusters = new HashMap<>();
+		for(Centroid centroid : centres){
+			clusters.put(centroid, new Cluster(centroid));
+		}
+
+		for(String businessID : businesses.keySet()){
+			Business tempBusiness = businesses.get(businessID);
+			Centroid tempCentre = getClosestCentroid(tempBusiness, clusters.keySet());
+
+			//add to cluster
+			clusters.get(tempCentre).addBusiness(tempBusiness);
+		}
+
+		return clusters;
+	}
+
+	private Centroid getClosestCentroid(Business business, Set<Centroid> centroids){
+		double minLocationDiff = -1;
+		double locationDiff;
+		double latDiff;
+		double lonDiff;
+
+		double[] loc = business.getLocation();
+		double latitude = loc[0];
+		double longitude = loc[1];
+
+		Centroid closest = new Centroid(null); //temporary
+
+		for(Centroid centroid : centroids){
+			//get location difference and compare it to the minimum
+			latDiff = centroid.latitude - latitude;
+			lonDiff = centroid.longitude - longitude;
+			locationDiff = Math.sqrt(latDiff*latDiff + lonDiff*lonDiff);
+
+			//if this is the first, set it as the thing to compare to.
+			//otherwise, compare and swap if smaller.
+			if(minLocationDiff == -1){
+				minLocationDiff = locationDiff;
+				closest = centroid;
+			}else if(locationDiff < minLocationDiff){
+				minLocationDiff = locationDiff;
+				closest = centroid;
+			}
+		}
+
+		return closest;
+	}
+
+	private class Cluster{
+
+		private Centroid centroid;
+		private Set<Business> children;
+
+		public Cluster(Centroid centroid){
+			this.centroid = centroid;
+			children = new HashSet<>();
+		}
+
+		public boolean addBusiness(Business business){
+			return children.add(business);
+		}
+
+		public boolean isEmpty(){
+			return children.isEmpty();
+		}
+
+		public double[] getCentre(){
+			double latitudeSum = 0;
+			double longitudeSum = 0;
+
+			for(Business bus : children){
+				double [] location = bus.getLocation();
+				latitudeSum += location[0];
+				longitudeSum += location[1];
+			}
+
+			double[] newLocation = {latitudeSum/children.size(), longitudeSum/children.size()};
+			return newLocation;
+		}
+
+	}
+
+	private class Centroid{
+
+		final double latitude;
+		final double longitude;
+
+		public Centroid(double [] location){
+			this.latitude = location[0];
+			this.longitude = location[1];
+		}
+
+		public boolean equals(Centroid other){
+			return (this.longitude == other.longitude && this.latitude == other.latitude);
+		}
 	}
 	
 	/**
