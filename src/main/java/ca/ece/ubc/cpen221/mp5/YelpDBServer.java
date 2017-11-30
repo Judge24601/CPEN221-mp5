@@ -2,6 +2,7 @@ package ca.ece.ubc.cpen221.mp5;
 
 import java.io.BufferedReader;
 import java.io.*;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.CountDownLatch;
@@ -33,7 +34,7 @@ public class YelpDBServer {
 	 * @param port
 	 *            port number, requires 0 <= port <= 65535
 	 */
-	public YelpDBServer(int port) throws IOException{
+	public YelpDBServer(int port) throws IOException, BindException{
 		this.restLatch = new CountDownLatch(0);
 		this.userLatch = new CountDownLatch(0);
 		serverSocket = new ServerSocket(port);
@@ -60,7 +61,15 @@ public class YelpDBServer {
 			handler.start();
 		}
 	}
-	
+	/**
+	 * Takes in a query, if it is one of the four base queries,
+	 * pass it to the database, otherwise return an error.
+	 * Handles concurrency through countdownlatches - if writing is happening, 
+	 * cannot read or write to that area of the database.
+	 * @param socket The client connection
+	 * @throws IOException
+	 * @modifies database
+	 */
 	public void handle(Socket socket) throws IOException{
 		System.err.println("client connected");
 		BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -128,6 +137,14 @@ public class YelpDBServer {
 		}finally {
 			in.close();
 			out.close();
+		}
+	}
+	public static void test() throws BindException{
+		try {
+			YelpDBServer server = new YelpDBServer(PORT_NUM);
+			server.serve();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	

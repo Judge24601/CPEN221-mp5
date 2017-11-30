@@ -67,7 +67,18 @@ public class YelpDBClient {
         socket.close();
     }
     
-    
+    public static String tester(String input) {
+    	try {
+           YelpDBClient client = new YelpDBClient("localhost", YelpDBServer.PORT_NUM);
+    	   client.sendRequest(input);
+    	   String y = client.getReply();
+           client.close();
+           return y;
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            return "ERR";
+        }
+    }
     
     public static void main(String[] args) {
         try {
