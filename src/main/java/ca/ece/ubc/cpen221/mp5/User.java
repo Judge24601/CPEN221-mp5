@@ -4,7 +4,6 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
