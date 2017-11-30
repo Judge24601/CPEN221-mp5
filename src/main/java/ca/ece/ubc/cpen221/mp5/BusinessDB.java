@@ -43,7 +43,7 @@ public abstract class BusinessDB implements MP5Db<Business>{
 			Review review = new Review(obj);
 			reviews.put(obj.getString("review_id"), review);
 			String userID = obj.getString("user_id");
-			users.get(userID).addReview(review.id);
+			users.get(userID).addReview(review.id, review.rating);
 			this.userLookup.put(review.id, userID);
 		}
 	}
@@ -68,8 +68,9 @@ public abstract class BusinessDB implements MP5Db<Business>{
 	}
 	
 	public Set<Business> getMatches(String queryString){
-		return null; //Change this
+		return null;
 	}
+	
 	
 	public String kMeansClusters_json(int k) {
 		return null; //Change this

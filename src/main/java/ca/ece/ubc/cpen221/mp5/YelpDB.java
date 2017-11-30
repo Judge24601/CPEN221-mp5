@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.function.Function;
 import java.util.function.ToDoubleBiFunction;
 import javax.json.*;
+import javax.json.stream.JsonParser;
+import javax.json.stream.JsonParsingException;
 
 
 public class YelpDB extends BusinessDB{
@@ -35,11 +37,46 @@ public class YelpDB extends BusinessDB{
 			String businessID = obj.getString("business_id");
 			Business currentBus = (Business) businesses.get(businessID);
 			this.busLookup.put(review, businessID);
-			currentBus.addReview(review);
+			currentBus.addReview(review, this.reviews.get(review).rating);
 		}
 	}
 	
 	//private List<String> specialTypes = Arrays.asList("open", "business_id", "name");
+	public String getRestaurant(String id) {
+		return businesses.get(id.trim()).toString();
+	}
+	
+	public String addRestaurant(String id) {
+		Reader strRead = new StringReader(id);
+		System.out.println(id);
+		JsonReader reader = Json.createReader(strRead);
+		try {
+		Restaurant rest = buildBusiness(reader.readObject());
+		this.businesses.put(rest.getId(), rest);
+		System.out.println(rest.toString());
+		return rest.toString();
+		}catch(JsonParsingException e) {
+			return "ERR: INVALID_RESTAURANT_STRING";
+		}
+	}
+	
+	public String addReview(String id) {
+		return null;
+	}
+	
+	public String addUser(String id) {
+		Reader strRead = new StringReader(id);
+		System.out.println(id);
+		JsonReader reader = Json.createReader(strRead);
+		try {
+			User use = new User(reader.readObject());
+			this.users.put(use.getId(), use);
+			System.out.println(use.toString());
+			return use.toString();
+		}catch(JsonParsingException e) {
+			return "ERR: INVALID_USER_STRING";
+		}
+	}
 	
 	private Restaurant buildBusiness(JsonObject obj) {
 		return new Restaurant(obj);
