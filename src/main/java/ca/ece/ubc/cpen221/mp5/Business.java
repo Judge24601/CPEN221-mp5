@@ -12,7 +12,7 @@ public interface Business {
 	
 	public Set<String> getReviews();
 	
-	public boolean addReview(String id);
+	public boolean addReview(String id, double rating);
 	
 	public double[] getLocation();
 	

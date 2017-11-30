@@ -82,10 +82,13 @@ public class YelpDBClient {
 
            Scanner sc = new Scanner(System.in);
            String input = sc.nextLine();
-           client.sendRequest(input);
-            // collect the replies
-           String y = client.getReply();
-           System.out.println(y);
+           while(input != "end") {
+        	   client.sendRequest(input);
+        	   // collect the replies
+        	   String y = client.getReply();
+        	   System.out.println(y);
+        	   input = sc.nextLine();
+           }
            client.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
