@@ -38,8 +38,8 @@ public abstract class BusinessDB implements MP5Db<Business>{
 			Review review = new Review(obj);
 			reviews.put(obj.getString("review_id"), review);
 			String userID = obj.getString("user_id");
-			users.get(userID).addReview(review.id);
-			this.userLookup.put(review.id, userID);
+			users.get(userID).addReview(review.getId(), review.rating);
+			this.userLookup.put(review.getId(), userID);
 		}
 	}
 	/**
@@ -63,8 +63,9 @@ public abstract class BusinessDB implements MP5Db<Business>{
 	}
 	
 	public Set<Business> getMatches(String queryString){
-		return null; //Change this
+		return null;
 	}
+	
 	
 	public String kMeansClusters_json(int k) {
 		Set<Centroid> centres = new HashSet<>();
@@ -225,7 +226,6 @@ public abstract class BusinessDB implements MP5Db<Business>{
 	 * @returns function of two paramaters, a database and string, to determine 
 	 * @throws IllegalArgumentException if a prediction cannot be made
 	 */
-	@SuppressWarnings("unchecked")
 	public ToDoubleBiFunction<MP5Db<Business>, String> getPredictorFunction(String user){
 		/*
 		 * x = priciness 
@@ -268,6 +268,7 @@ public abstract class BusinessDB implements MP5Db<Business>{
 					throw new IllegalArgumentException();
 				}
 				double a = meanY - b*meanX;
+				@SuppressWarnings("unused")
 				double r_2 = (sxy*sxy)/(sxx*syy);
 				return (x, y) -> a*((BusinessDB)x).businesses.get(y).getPrice() + b;
 	}
