@@ -2,6 +2,7 @@ package ca.ece.ubc.cpen221.mp5;
 
 import java.io.BufferedReader;
 import java.io.*;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.CountDownLatch;
@@ -33,7 +34,7 @@ public class YelpDBServer {
 	 * @param port
 	 *            port number, requires 0 <= port <= 65535
 	 */
-	public YelpDBServer(int port) throws IOException{
+	public YelpDBServer(int port) throws IOException, BindException{
 		this.restLatch = new CountDownLatch(0);
 		this.userLatch = new CountDownLatch(0);
 		serverSocket = new ServerSocket(port);
@@ -136,6 +137,14 @@ public class YelpDBServer {
 		}finally {
 			in.close();
 			out.close();
+		}
+	}
+	public static void test() throws BindException{
+		try {
+			YelpDBServer server = new YelpDBServer(PORT_NUM);
+			server.serve();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	

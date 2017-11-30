@@ -40,7 +40,11 @@ public class YelpDB extends BusinessDB{
 	
 	//private List<String> specialTypes = Arrays.asList("open", "business_id", "name");
 	public String getRestaurant(String id) {
-		return businesses.get(id.trim()).toString();
+		try {
+			return businesses.get(id.trim()).toString();
+		}catch(NullPointerException e) {
+			return "ERR: NO_SUCH_RESTAURANT";
+		}
 	}
 	
 	public String addRestaurant(String id) {
