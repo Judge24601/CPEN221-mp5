@@ -1,10 +1,12 @@
 package ca.ece.ubc.cpen221.mp5;
+import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
-import javax.json.JsonValue;
+import javax.json.JsonObjectBuilder;
 import java.util.*;
 public class Restaurant implements Business{
-
+	private static Long id = 0l;
 	private String name;
 	private Set<String> reviews;
 	private boolean open;
@@ -16,12 +18,31 @@ public class Restaurant implements Business{
 	private List<String> categories;
 	private double price;
 	private double rating;
+	private int reviewCount;
+	private String address;
+	private String photoUrl;
 	
-	public Restaurant(JsonObject info){
-		this.idStr = info.getString("business_id");
+	public Restaurant(JsonObject info) throws NullPointerException{
+		try {
+			this.idStr = info.getString("business_id");
+		}catch(NullPointerException e) {
+			this.idStr = id.toString();
+			id++;
+		}
 		this.name = info.getString("name");
 		this.price = info.getJsonNumber("price").doubleValue();
-		this.rating = info.getInt("stars");
+		try {
+			this.rating = info.getInt("stars");
+		}catch(NullPointerException e) {
+			this.rating = 0.0;
+		}
+		try {
+			this.reviewCount = info.getInt("review_count");
+		}catch(NullPointerException e) {
+			this.reviewCount = 0;
+		}
+		this.photoUrl = info.getString("photo_url");
+		this.address = info.getString("full_address");
 		this.open = info.getBoolean("open");
 		this.url = info.getString("url");
 		this.longitude = info.getJsonNumber("longitude").doubleValue();
@@ -59,7 +80,8 @@ public class Restaurant implements Business{
 		return new HashSet<>(this.reviews);
 	}
 	
-	public boolean addReview(String id) {
+	public boolean addReview(String id, double rating) {
+		
 		return reviews.add(id);
 	}
 	public Boolean isOpen() {
@@ -68,5 +90,33 @@ public class Restaurant implements Business{
 	
 	public double getPrice() {
 		return this.price;
+	}
+	
+	
+	@Override
+	public String toString() {
+		JsonObjectBuilder build = Json.createObjectBuilder();
+		build.add("name", this.name);
+		build.add("business_id", this.idStr);
+		build.add("latitude", this.latitude);
+		build.add("longitude", this.longitude);
+		build.add("url", this.url);
+		build.add("open", this.open);
+		build.add("price", this.price);
+		JsonArrayBuilder catBuild = Json.createArrayBuilder();
+		for(String cate: this.categories) {
+			catBuild.add(cate);
+		}
+		build.add("categories", catBuild.build());
+		JsonArrayBuilder neighBuild = Json.createArrayBuilder();
+		for(String ne: this.neighbourhoods) {
+			neighBuild.add(ne);
+		}
+		build.add("neighborhoods", neighBuild.build());
+		build.add("rating", this.rating);
+		build.add("photo_url", this.photoUrl);
+		build.add("review_count", this.reviewCount);
+		build.add("full_address", this.address);
+		return build.build().toString();
 	}
 }

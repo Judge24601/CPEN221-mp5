@@ -1,7 +1,6 @@
 package ca.ece.ubc.cpen221.mp5;
 
 import java.io.*;
-import java.math.BigInteger;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -70,22 +69,20 @@ public class YelpDBClient {
     
     
     
-    
-    private static final int N = 100;
-    
-    /**
-     * Use a FibonacciServer to find the first N Fibonacci numbers.
-     */
     public static void main(String[] args) {
         try {
             YelpDBClient client = new YelpDBClient("localhost", YelpDBServer.PORT_NUM);
 
            Scanner sc = new Scanner(System.in);
            String input = sc.nextLine();
-           client.sendRequest(input);
-            // collect the replies
-           String y = client.getReply();
-           System.out.println(y);
+           while(input != "end") {
+        	   client.sendRequest(input);
+        	   // collect the replies
+        	   String y = client.getReply();
+        	   System.out.println(y);
+        	   input = sc.nextLine();
+           }
+           sc.close();
            client.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
