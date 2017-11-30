@@ -6,6 +6,7 @@ import java.net.BindException;
 import org.junit.Test;
 
 public class ServerTest {
+	private static boolean started = false;
 	@Test
 	public void addUserSuccess(){
 		String result = tester("ADDUSER {\"name\":\"Hi\"}");
@@ -33,7 +34,6 @@ public class ServerTest {
 	@Test
 	public void addReviewSuccess() {
 		String result = tester("ADDREVIEW {\"text\": \"yoo this place suuccks\", \"stars\": 5, \"user_id\": \"-w8H1G9raUC0Gg_zvlJDwg\", \"business_id\": \"XD5ybqI0BHcTj5cLQyIPLA\"}");
-		System.out.println(result);
 		assertTrue(result.contains("text\":\"yoo this place suuccks\""));
 	}
 	
@@ -71,16 +71,19 @@ public class ServerTest {
 	
 	private String tester(String input) {
 		String result;
-		Thread server = new Thread(new Runnable(){
-			public void run() {
-				try {
-					YelpDBServer.test();
-				}catch(BindException e) {
-					
-				}				
-			}
-		});
-		server.start();
+		if(!started) {
+			Thread server = new Thread(new Runnable(){
+				public void run() {
+					try {
+						YelpDBServer.test();
+					}catch(BindException e) {
+						
+					}				
+				}
+			});
+			started = true;
+			server.start();
+		}
 		result = YelpDBClient.tester(input);
 		return result;
 	}
