@@ -23,7 +23,7 @@ public class Restaurant implements Business{
 	private String address;
 	private String photoUrl;
 	
-	public Restaurant(JsonObject info){
+	public Restaurant(JsonObject info) throws NullPointerException{
 		try {
 			this.idStr = info.getString("business_id");
 		}catch(NullPointerException e) {

@@ -17,7 +17,7 @@ public class User {
 	private double averageStars;
 	private Set<String> reviews;
 	
-	public User(JsonObject info) {
+	public User(JsonObject info) throws NullPointerException{
 		try {
 			this.id = info.getString("user_id");
 		}catch(NullPointerException e){

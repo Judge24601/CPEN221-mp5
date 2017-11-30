@@ -43,8 +43,8 @@ public abstract class BusinessDB implements MP5Db<Business>{
 			Review review = new Review(obj);
 			reviews.put(obj.getString("review_id"), review);
 			String userID = obj.getString("user_id");
-			users.get(userID).addReview(review.id, review.rating);
-			this.userLookup.put(review.id, userID);
+			users.get(userID).addReview(review.getId(), review.rating);
+			this.userLookup.put(review.getId(), userID);
 		}
 	}
 	/**

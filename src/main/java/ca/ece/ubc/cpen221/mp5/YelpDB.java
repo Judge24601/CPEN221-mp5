@@ -48,20 +48,39 @@ public class YelpDB extends BusinessDB{
 	
 	public String addRestaurant(String id) {
 		Reader strRead = new StringReader(id);
-		System.out.println(id);
 		JsonReader reader = Json.createReader(strRead);
 		try {
 		Restaurant rest = buildBusiness(reader.readObject());
 		this.businesses.put(rest.getId(), rest);
 		System.out.println(rest.toString());
 		return rest.toString();
-		}catch(JsonParsingException e) {
+		}catch(JsonParsingException | NullPointerException e) {
 			return "ERR: INVALID_RESTAURANT_STRING";
 		}
 	}
 	
 	public String addReview(String id) {
-		return null;
+		Reader strRead = new StringReader(id);
+		JsonReader reader = Json.createReader(strRead);
+		try {
+			JsonObject obj = reader.readObject();
+			Review rev = new Review(obj);
+			if(users.containsKey(obj.getString("user_id"))) {
+				this.userLookup.put(rev.getId(), obj.getString("user_id"));
+			}else {
+				return "ERR: NO_SUCH_USER";
+			}
+			if(businesses.containsKey(obj.getString("business_id"))) {
+				this.busLookup.put(rev.getId(), obj.getString("business_id"));
+			}else {
+				return "ERR: NO_SUCH_RESTAURANT";
+			}
+			this.reviews.put(rev.getId(), rev);
+			System.out.println(rev.toString());
+			return rev.toString();
+		}catch(JsonParsingException | NullPointerException e) {
+			return "ERR: INVALID_REVIEW_STRING";
+		}
 	}
 	
 	public String addUser(String id) {
@@ -73,7 +92,7 @@ public class YelpDB extends BusinessDB{
 			this.users.put(use.getId(), use);
 			System.out.println(use.toString());
 			return use.toString();
-		}catch(JsonParsingException e) {
+		}catch(JsonParsingException| NullPointerException e) {
 			return "ERR: INVALID_USER_STRING";
 		}
 	}
