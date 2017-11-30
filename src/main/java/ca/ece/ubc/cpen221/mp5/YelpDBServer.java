@@ -60,7 +60,15 @@ public class YelpDBServer {
 			handler.start();
 		}
 	}
-	
+	/**
+	 * Takes in a query, if it is one of the four base queries,
+	 * pass it to the database, otherwise return an error.
+	 * Handles concurrency through countdownlatches - if writing is happening, 
+	 * cannot read or write to that area of the database.
+	 * @param socket The client connection
+	 * @throws IOException
+	 * @modifies database
+	 */
 	public void handle(Socket socket) throws IOException{
 		System.err.println("client connected");
 		BufferedReader in = new BufferedReader(new InputStreamReader(

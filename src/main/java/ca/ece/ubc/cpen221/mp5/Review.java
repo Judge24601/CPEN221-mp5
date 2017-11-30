@@ -3,7 +3,17 @@ package ca.ece.ubc.cpen221.mp5;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-
+/**
+ * Rep Invariant:
+ * Id cannot be null
+ * Text cannot be null
+ * Rating cannot be null
+ * 
+ *  Abstraction Function:
+ * Represents a review as an id, a text, and a rating
+ *
+ *
+ */
 public class Review {
 	private static Long baseId = 0l;
 	private String id;
