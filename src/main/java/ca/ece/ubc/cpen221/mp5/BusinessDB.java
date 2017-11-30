@@ -6,9 +6,7 @@ import java.io.StringReader;
 import java.util.*;
 import java.util.function.ToDoubleBiFunction;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import javax.json.*;
 
 public abstract class BusinessDB implements MP5Db<Business>{
 	protected Map<String, Business> businesses;
@@ -106,13 +104,48 @@ public abstract class BusinessDB implements MP5Db<Business>{
 			}
 
 			clusters = assign(centres);
-			if(clusters.equals(oldClusters)) break;
+
+			boolean finished = true;
+
+			for(Centroid centroid : clusters.keySet()){
+				boolean check = false;
+				for(Centroid oldCentroid : oldClusters.keySet()){
+					if(centroid.equals(oldCentroid)){
+						check = true;
+						break;
+					}
+				}
+				if(!check){
+					finished = false;
+					break;
+				}
+			}
+			if(finished) break;
 			oldClusters.putAll(clusters);
 		}
-		
-		//convert clusters to JSON
 
-		return null; //Change this
+		//convert clusters to JSON
+		JsonArrayBuilder jsonClusterBuilder = Json.createArrayBuilder();
+		int clusterNum = 0;
+		for(Centroid centroid : clusters.keySet()){
+			Cluster tempCluster = clusters.get(centroid);
+			for(Business business : tempCluster.children) {
+				double[] location = business.getLocation();
+				double longitude = location[1];
+				double latitude = location[0];
+
+				JsonObjectBuilder tempObj = Json.createObjectBuilder();
+				tempObj.add("x", longitude);
+				tempObj.add("y", latitude);
+				tempObj.add("cluster", clusterNum);
+				tempObj.add("weight", 6.9);
+
+				jsonClusterBuilder.add(tempObj.build());
+			}
+			clusterNum ++;
+		}
+
+		return jsonClusterBuilder.build().toString();
 	}
 
 	/**
@@ -147,7 +180,9 @@ public abstract class BusinessDB implements MP5Db<Business>{
 		double latitude = loc[0];
 		double longitude = loc[1];
 
-		Centroid closest = new Centroid(null); //temporary
+		double[] tempLoc = {0, 0};
+
+		Centroid closest = new Centroid(tempLoc); //temporary
 
 		for(Centroid centroid : centroids){
 			//get location difference and compare it to the minimum
@@ -177,6 +212,11 @@ public abstract class BusinessDB implements MP5Db<Business>{
 		public Cluster(Centroid centroid){
 			this.centroid = centroid;
 			children = new HashSet<>();
+		}
+
+		public boolean equals(Cluster other){
+			if(this.centroid.equals(other.centroid) && this.children.equals(other.children)) return true;
+			return false;
 		}
 
 		public boolean addBusiness(Business business){
