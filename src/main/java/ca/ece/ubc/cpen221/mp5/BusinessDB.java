@@ -108,7 +108,7 @@ public abstract class BusinessDB implements MP5Db<Business>{
 			if(clusters.equals(oldClusters)) break;
 			oldClusters.putAll(clusters);
 		}
-		
+
 		//convert clusters to JSON
 
 		return null; //Change this
