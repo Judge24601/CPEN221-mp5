@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class ServerTest {
 	private static boolean started = false;
+	
 	@Test
 	public void addUserSuccess(){
 		String result = tester("ADDUSER {\"name\":\"Hi\"}");
