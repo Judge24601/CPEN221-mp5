@@ -1,6 +1,7 @@
 package ca.ece.ubc.cpen221.mp5;
 
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.*;
@@ -145,7 +146,15 @@ public abstract class BusinessDB implements MP5Db<Business>{
 			clusterNum ++;
 		}
 
-		return jsonClusterBuilder.build().toString();
+		JsonArray clusterJson = jsonClusterBuilder.build();
+		try {
+			FileWriter writer = new FileWriter("visualize/voronoi.json", false);
+			writer.write(clusterJson.toString());
+			writer.close();
+		}catch(IOException e) {
+			System.out.println("bad");
+		}
+		return clusterJson.toString();
 	}
 
 	/**

@@ -16,4 +16,14 @@ public class YelpDBTest {
 				fail();
 		}
 	}
+	
+	@Test
+	public void kMeansTest() {
+		try {
+			MP5Db<Business> db = new YelpDB("data/restaurants.json", "data/reviews.json", "data/users.json");
+			System.out.println(db.kMeansClusters_json(3));
+		}catch(IOException e) {
+			fail();
+		}
+	}
 }

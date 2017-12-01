@@ -4,6 +4,8 @@ import java.io.*;
 import javax.json.*;
 import javax.json.stream.JsonParsingException;
 
+import org.antlr.v4.runtime.*;
+
 
 public class YelpDB extends BusinessDB{
 
@@ -92,6 +94,15 @@ public class YelpDB extends BusinessDB{
 		}catch(JsonParsingException | NullPointerException e) {
 			return "ERR: INVALID_REVIEW_STRING";
 		}
+	}
+	
+	@Override
+	public Set<Business> getMatches(String queryString){
+		@SuppressWarnings("deprecation")
+		CharStream stream = new ANTLRInputStream(queryString);
+	//	YelpLexer lexer = new YelpLexer(stream);
+		//TokenStream tokens = new CommonTokenStream(lexer);
+		return null;
 	}
 	
 	public String addUser(String id) {
