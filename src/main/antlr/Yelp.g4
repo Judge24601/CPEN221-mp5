@@ -53,4 +53,4 @@ IN : 'in';
 CATEGORY : 'category';
 PRICE : 'price';
 
-STRING : [A-Za-z' ']+;
+STRING : [A-Za-z 0-9]+;
