@@ -5,6 +5,7 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'antlr'
 
 
 // In this section you declare where to find the dependencies of your project

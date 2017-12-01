@@ -1,10 +1,15 @@
 package ca.ece.ubc.cpen221.mp5;
 import java.util.*;
+import java.util.concurrent.Future;
 import java.io.*;
 import javax.json.*;
 import javax.json.stream.JsonParsingException;
+import javax.swing.JFrame;
 
+import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 
 public class YelpDB extends BusinessDB{
@@ -100,8 +105,14 @@ public class YelpDB extends BusinessDB{
 	public Set<Business> getMatches(String queryString){
 		@SuppressWarnings("deprecation")
 		CharStream stream = new ANTLRInputStream(queryString);
-	//	YelpLexer lexer = new YelpLexer(stream);
-		//TokenStream tokens = new CommonTokenStream(lexer);
+		YelpLexer lexer = new YelpLexer(stream);
+		TokenStream tokens = new CommonTokenStream(lexer);
+		YelpParser parser = new YelpParser(tokens);
+		ParseTree tree = parser.root();
+		ParseTreeWalker walker = new ParseTreeWalker();
+		YelpListener listener = new YelpBaseListener();
+		Trees.inspect(tree, parser);
+		System.out.println(tree.toStringTree(parser));
 		return null;
 	}
 	
