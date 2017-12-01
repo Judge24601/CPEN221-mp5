@@ -34,6 +34,7 @@ category : CATEGORY LEFT STRING RIGHT;
 rating : RATING LEFT STRING RIGHT;
 price : PRICE INEQ NUM;
 name : NAME LEFT STRING RIGHT;
+root : atom EOF;
 
  /*
   * Lexer rules

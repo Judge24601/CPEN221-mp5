@@ -106,6 +106,18 @@ public class YelpBaseListener implements YelpListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitName(YelpParser.NameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRoot(YelpParser.RootContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRoot(YelpParser.RootContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

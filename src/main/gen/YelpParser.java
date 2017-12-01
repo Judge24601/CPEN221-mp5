@@ -20,9 +20,10 @@ public class YelpParser extends Parser {
 		PRICE=11, STRING=12;
 	public static final int
 		RULE_orExpr = 0, RULE_andExpr = 1, RULE_atom = 2, RULE_in = 3, RULE_category = 4, 
-		RULE_rating = 5, RULE_price = 6, RULE_name = 7;
+		RULE_rating = 5, RULE_price = 6, RULE_name = 7, RULE_root = 8;
 	public static final String[] ruleNames = {
-		"orExpr", "andExpr", "atom", "in", "category", "rating", "price", "name"
+		"orExpr", "andExpr", "atom", "in", "category", "rating", "price", "name", 
+		"root"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -119,21 +120,21 @@ public class YelpParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(16);
+			setState(18);
 			andExpr();
-			setState(21);
+			setState(23);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==OR) {
 				{
 				{
-				setState(17);
+				setState(19);
 				match(OR);
-				setState(18);
+				setState(20);
 				andExpr();
 				}
 				}
-				setState(23);
+				setState(25);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -187,21 +188,21 @@ public class YelpParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(24);
+			setState(26);
 			atom();
-			setState(29);
+			setState(31);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==AND) {
 				{
 				{
-				setState(25);
+				setState(27);
 				match(AND);
-				setState(26);
+				setState(28);
 				atom();
 				}
 				}
-				setState(31);
+				setState(33);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -262,52 +263,52 @@ public class YelpParser extends Parser {
 		AtomContext _localctx = new AtomContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_atom);
 		try {
-			setState(41);
+			setState(43);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case IN:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(32);
+				setState(34);
 				in();
 				}
 				break;
 			case CATEGORY:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(33);
+				setState(35);
 				category();
 				}
 				break;
 			case RATING:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(34);
+				setState(36);
 				rating();
 				}
 				break;
 			case PRICE:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(35);
+				setState(37);
 				price();
 				}
 				break;
 			case NAME:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(36);
+				setState(38);
 				name();
 				}
 				break;
 			case LEFT:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(37);
-				match(LEFT);
-				setState(38);
-				orExpr();
 				setState(39);
+				match(LEFT);
+				setState(40);
+				orExpr();
+				setState(41);
 				match(RIGHT);
 				}
 				break;
@@ -356,13 +357,13 @@ public class YelpParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(43);
-			match(IN);
-			setState(44);
-			match(LEFT);
 			setState(45);
-			match(STRING);
+			match(IN);
 			setState(46);
+			match(LEFT);
+			setState(47);
+			match(STRING);
+			setState(48);
 			match(RIGHT);
 			}
 		}
@@ -407,13 +408,13 @@ public class YelpParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(48);
-			match(CATEGORY);
-			setState(49);
-			match(LEFT);
 			setState(50);
-			match(STRING);
+			match(CATEGORY);
 			setState(51);
+			match(LEFT);
+			setState(52);
+			match(STRING);
+			setState(53);
 			match(RIGHT);
 			}
 		}
@@ -458,13 +459,13 @@ public class YelpParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(53);
-			match(RATING);
-			setState(54);
-			match(LEFT);
 			setState(55);
-			match(STRING);
+			match(RATING);
 			setState(56);
+			match(LEFT);
+			setState(57);
+			match(STRING);
+			setState(58);
 			match(RIGHT);
 			}
 		}
@@ -508,11 +509,11 @@ public class YelpParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(58);
-			match(PRICE);
-			setState(59);
-			match(INEQ);
 			setState(60);
+			match(PRICE);
+			setState(61);
+			match(INEQ);
+			setState(62);
 			match(NUM);
 			}
 		}
@@ -557,13 +558,13 @@ public class YelpParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(62);
-			match(NAME);
-			setState(63);
-			match(LEFT);
 			setState(64);
-			match(STRING);
+			match(NAME);
 			setState(65);
+			match(LEFT);
+			setState(66);
+			match(STRING);
+			setState(67);
 			match(RIGHT);
 			}
 		}
@@ -578,24 +579,72 @@ public class YelpParser extends Parser {
 		return _localctx;
 	}
 
+	public static class RootContext extends ParserRuleContext {
+		public AtomContext atom() {
+			return getRuleContext(AtomContext.class,0);
+		}
+		public TerminalNode EOF() { return getToken(YelpParser.EOF, 0); }
+		public RootContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_root; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof YelpListener ) ((YelpListener)listener).enterRoot(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof YelpListener ) ((YelpListener)listener).exitRoot(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof YelpVisitor ) return ((YelpVisitor<? extends T>)visitor).visitRoot(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final RootContext root() throws RecognitionException {
+		RootContext _localctx = new RootContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_root);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(69);
+			atom();
+			setState(70);
+			match(EOF);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\16F\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\2\7\2\26"+
-		"\n\2\f\2\16\2\31\13\2\3\3\3\3\3\3\7\3\36\n\3\f\3\16\3!\13\3\3\4\3\4\3"+
-		"\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4,\n\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3"+
-		"\6\3\6\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\2\2"+
-		"\n\2\4\6\b\n\f\16\20\2\2\2D\2\22\3\2\2\2\4\32\3\2\2\2\6+\3\2\2\2\b-\3"+
-		"\2\2\2\n\62\3\2\2\2\f\67\3\2\2\2\16<\3\2\2\2\20@\3\2\2\2\22\27\5\4\3\2"+
-		"\23\24\7\3\2\2\24\26\5\4\3\2\25\23\3\2\2\2\26\31\3\2\2\2\27\25\3\2\2\2"+
-		"\27\30\3\2\2\2\30\3\3\2\2\2\31\27\3\2\2\2\32\37\5\6\4\2\33\34\7\4\2\2"+
-		"\34\36\5\6\4\2\35\33\3\2\2\2\36!\3\2\2\2\37\35\3\2\2\2\37 \3\2\2\2 \5"+
-		"\3\2\2\2!\37\3\2\2\2\",\5\b\5\2#,\5\n\6\2$,\5\f\7\2%,\5\16\b\2&,\5\20"+
-		"\t\2\'(\7\5\2\2()\5\2\2\2)*\7\6\2\2*,\3\2\2\2+\"\3\2\2\2+#\3\2\2\2+$\3"+
-		"\2\2\2+%\3\2\2\2+&\3\2\2\2+\'\3\2\2\2,\7\3\2\2\2-.\7\13\2\2./\7\5\2\2"+
-		"/\60\7\16\2\2\60\61\7\6\2\2\61\t\3\2\2\2\62\63\7\f\2\2\63\64\7\5\2\2\64"+
-		"\65\7\16\2\2\65\66\7\6\2\2\66\13\3\2\2\2\678\7\n\2\289\7\5\2\29:\7\16"+
-		"\2\2:;\7\6\2\2;\r\3\2\2\2<=\7\r\2\2=>\7\t\2\2>?\7\b\2\2?\17\3\2\2\2@A"+
-		"\7\7\2\2AB\7\5\2\2BC\7\16\2\2CD\7\6\2\2D\21\3\2\2\2\5\27\37+";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\16K\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2\3\2"+
+		"\7\2\30\n\2\f\2\16\2\33\13\2\3\3\3\3\3\3\7\3 \n\3\f\3\16\3#\13\3\3\4\3"+
+		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4.\n\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3"+
+		"\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\n"+
+		"\3\n\3\n\3\n\2\2\13\2\4\6\b\n\f\16\20\22\2\2\2H\2\24\3\2\2\2\4\34\3\2"+
+		"\2\2\6-\3\2\2\2\b/\3\2\2\2\n\64\3\2\2\2\f9\3\2\2\2\16>\3\2\2\2\20B\3\2"+
+		"\2\2\22G\3\2\2\2\24\31\5\4\3\2\25\26\7\3\2\2\26\30\5\4\3\2\27\25\3\2\2"+
+		"\2\30\33\3\2\2\2\31\27\3\2\2\2\31\32\3\2\2\2\32\3\3\2\2\2\33\31\3\2\2"+
+		"\2\34!\5\6\4\2\35\36\7\4\2\2\36 \5\6\4\2\37\35\3\2\2\2 #\3\2\2\2!\37\3"+
+		"\2\2\2!\"\3\2\2\2\"\5\3\2\2\2#!\3\2\2\2$.\5\b\5\2%.\5\n\6\2&.\5\f\7\2"+
+		"\'.\5\16\b\2(.\5\20\t\2)*\7\5\2\2*+\5\2\2\2+,\7\6\2\2,.\3\2\2\2-$\3\2"+
+		"\2\2-%\3\2\2\2-&\3\2\2\2-\'\3\2\2\2-(\3\2\2\2-)\3\2\2\2.\7\3\2\2\2/\60"+
+		"\7\13\2\2\60\61\7\5\2\2\61\62\7\16\2\2\62\63\7\6\2\2\63\t\3\2\2\2\64\65"+
+		"\7\f\2\2\65\66\7\5\2\2\66\67\7\16\2\2\678\7\6\2\28\13\3\2\2\29:\7\n\2"+
+		"\2:;\7\5\2\2;<\7\16\2\2<=\7\6\2\2=\r\3\2\2\2>?\7\r\2\2?@\7\t\2\2@A\7\b"+
+		"\2\2A\17\3\2\2\2BC\7\7\2\2CD\7\5\2\2DE\7\16\2\2EF\7\6\2\2F\21\3\2\2\2"+
+		"GH\5\6\4\2HI\7\2\2\3I\23\3\2\2\2\5\31!-";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

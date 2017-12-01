@@ -86,4 +86,14 @@ public interface YelpListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitName(YelpParser.NameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link YelpParser#root}.
+	 * @param ctx the parse tree
+	 */
+	void enterRoot(YelpParser.RootContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link YelpParser#root}.
+	 * @param ctx the parse tree
+	 */
+	void exitRoot(YelpParser.RootContext ctx);
 }

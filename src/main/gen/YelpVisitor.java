@@ -57,4 +57,10 @@ public interface YelpVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitName(YelpParser.NameContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link YelpParser#root}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRoot(YelpParser.RootContext ctx);
 }
