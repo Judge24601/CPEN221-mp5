@@ -20,6 +20,9 @@ public class Query {
 	public Query(List<Query> children) {
 		this.children = children;
 	}
+	public void addChild(Query child) {
+		this.children.add(child);
+	}
 	
 	public void setAsOr() {
 		this.orFlag = true;

@@ -9,6 +9,8 @@ import java.util.*;
  * 
  * Rep Invariant:
  * none of the fields can be null
+ * price must be between 1 and 5
+ * rating must be between 1 and 5
  * reviews, neighbourhods and categories contain no null entries
  * each entry in reviews is a valid review id that exists in the same database Restaurant exists in
  * Abstraction Function:
@@ -26,6 +28,7 @@ public class Restaurant implements Business{
 	private double latitude;
 	private List<String> neighbourhoods;
 	private List<String> categories;
+	private List<String> schools;
 	private double price;
 	private double rating;
 	private int reviewCount;
@@ -41,10 +44,20 @@ public class Restaurant implements Business{
 		}
 		this.name = info.getString("name");
 		this.price = info.getJsonNumber("price").doubleValue();
+		if(price< 1.0) {
+			this.rating = 1.0;
+		}else if(price > 5.0) {
+			this.rating = 5.0;
+		}
 		try {
 			this.rating = info.getInt("stars");
+			if(rating< 1.0) {
+				this.rating = 1.0;
+			}else if(rating > 5.0) {
+				this.rating = 5.0;
+			}
 		}catch(NullPointerException e) {
-			this.rating = 0.0;
+			this.rating = 1.0;
 		}
 		try {
 			this.reviewCount = info.getInt("review_count");
@@ -69,8 +82,22 @@ public class Restaurant implements Business{
 		for(int i = 0; i < arr2.size(); i++) {
 			neighbourhoods.add(arr2.getString(i));
 		}
+		this.schools = new ArrayList<String>();
+		JsonArray arr3 = info.getJsonArray("schools");
+		for(int i = 0; i < arr3.size(); i++) {
+			schools.add(arr2.getString(i));
+		}
+		
 
 		this.reviews = new HashSet<String>();
+	}
+	
+	public List<String> getNeighbourhoods() {
+		return new ArrayList<String>(this.neighbourhoods);
+	}
+	
+	public List<String> getCategories() {
+		return new ArrayList<String>(this.categories);
 	}
 	
 	public String getId() {
@@ -122,7 +149,13 @@ public class Restaurant implements Business{
 			neighBuild.add(ne);
 		}
 		build.add("neighborhoods", neighBuild.build());
+		JsonArrayBuilder schoolBuild = Json.createArrayBuilder();
+		for(String s: this.schools) {
+			schoolBuild.add(s);
+		}
+		build.add("schools", schoolBuild.build());
 		build.add("rating", this.rating);
+		build.add("type", "business");
 		build.add("photo_url", this.photoUrl);
 		build.add("review_count", this.reviewCount);
 		build.add("full_address", this.address);
