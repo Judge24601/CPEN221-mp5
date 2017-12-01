@@ -10,7 +10,7 @@ public class Query {
 	String exp;
 	String searchFor;
 	Set<Restaurant> foundSet;
-	
+	boolean orFlag = false;
 	//base case
 	public Query(String exp, String searchFor) {
 		this.exp = exp; 
@@ -21,27 +21,25 @@ public class Query {
 		this.children = children;
 	}
 	
-	/*
-	public void addOr(Query andExp) {
-		or.add(andExp.and);
+	public void setAsOr() {
+		this.orFlag = true;
 	}
 	
-	public void addAnd(Query atom) {
-		and.add(atom);
-	}
-	*/
 	
-	//ONLY Eval from Root
+	//ONLY Eval OrExps
 	public Set<Restaurant> eval() {
 		Set<Restaurant> results = new HashSet<Restaurant>();
 		for(Query andExp: this.children) {
 			Set<Restaurant> baseSet = andExp.children.get(0).foundSet;
 			for(Query atom: andExp.children) {
+				if(atom.orFlag) {
+					atom.foundSet = atom.eval();
+				}
 				baseSet.retainAll(atom.foundSet);
 			}
 			results.addAll(baseSet);
 		}
-		return results; //Change
+		return results; 
 	}
 	
 	public String baseRequest() {
