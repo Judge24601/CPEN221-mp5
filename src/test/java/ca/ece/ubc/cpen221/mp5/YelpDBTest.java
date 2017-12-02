@@ -16,7 +16,7 @@ public class YelpDBTest {
 				fail();
 		}
 	}
-	
+
 	@Test
 	public void kMeansTest() {
 		try {

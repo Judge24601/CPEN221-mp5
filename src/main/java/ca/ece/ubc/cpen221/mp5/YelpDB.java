@@ -16,10 +16,15 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 public class YelpDB extends BusinessDB{
 
 	public static void main(String[] args){
+
 		try {
 			YelpDB myDB = new YelpDB("data/restaurants.json", "data/reviews.json", "data/users.json");
-			System.out.println(myDB.kMeansClusters_json(4));
-		}catch(IOException e){
+			File file = new File("visualize/voronoi.json");
+			FileWriter writer = new FileWriter(file);
+			writer.write(myDB.kMeansClusters_json(4));
+			writer.flush();
+			writer.close();
+		}catch(Exception e){
 			System.out.println("sdfweoifhohfofhofh");
 		}
 	}
