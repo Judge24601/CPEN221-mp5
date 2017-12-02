@@ -1,6 +1,7 @@
 package ca.ece.ubc.cpen221.mp5;
 // Genepried from C:/Users/Miles/Desktop/CPEN_221/f17-mp5-mjustice_bjury/src/main/antlr\Yelp.g4 by ANTLR 4.7
 
+import ca.ece.ubc.cpen221.antlr.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EmptyStackException;
@@ -19,7 +20,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class YelpBaseListener implements YelpListener {
+public class YelpRecursiveListener extends YelpBaseListener {
 	/**
 	 * {@inheritDoc}
 	 *

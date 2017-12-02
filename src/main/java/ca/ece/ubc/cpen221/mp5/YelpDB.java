@@ -6,6 +6,7 @@ import javax.json.*;
 import javax.json.stream.JsonParsingException;
 import javax.swing.JFrame;
 
+import ca.ece.ubc.cpen221.antlr.*;
 import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -116,7 +117,7 @@ public class YelpDB extends BusinessDB{
 			return badSet;
 		}
 		ParseTreeWalker walker = new ParseTreeWalker();
-		YelpBaseListener listener = new YelpBaseListener();
+		YelpRecursiveListener listener = new YelpRecursiveListener();
 		listener.database = this;
 		walker.walk(listener, tree);
 		//Trees.inspect(tree, parser);

@@ -1,5 +1,5 @@
-// Generated from C:/Users/Miles/Desktop/CPEN_221/f17-mp5-mjustice_bjury/src/main/antlr\Yelp.g4 by ANTLR 4.7
-package ca.ece.ubc.cpen221.mp5;
+// Generated from Yelp.g4 by ANTLR 4.7
+package ca.ece.ubc.cpen221.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -107,11 +107,6 @@ public class YelpParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof YelpListener ) ((YelpListener)listener).exitOrExpr(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YelpVisitor ) return ((YelpVisitor<? extends T>)visitor).visitOrExpr(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final OrExprContext orExpr() throws RecognitionException {
@@ -174,11 +169,6 @@ public class YelpParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof YelpListener ) ((YelpListener)listener).exitAndExpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YelpVisitor ) return ((YelpVisitor<? extends T>)visitor).visitAndExpr(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -252,11 +242,6 @@ public class YelpParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof YelpListener ) ((YelpListener)listener).exitAtom(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YelpVisitor ) return ((YelpVisitor<? extends T>)visitor).visitAtom(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -342,11 +327,6 @@ public class YelpParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof YelpListener ) ((YelpListener)listener).exitIn(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YelpVisitor ) return ((YelpVisitor<? extends T>)visitor).visitIn(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final InContext in() throws RecognitionException {
@@ -392,11 +372,6 @@ public class YelpParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof YelpListener ) ((YelpListener)listener).exitCategory(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YelpVisitor ) return ((YelpVisitor<? extends T>)visitor).visitCategory(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -444,11 +419,6 @@ public class YelpParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof YelpListener ) ((YelpListener)listener).exitRating(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YelpVisitor ) return ((YelpVisitor<? extends T>)visitor).visitRating(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final RatingContext rating() throws RecognitionException {
@@ -494,11 +464,6 @@ public class YelpParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof YelpListener ) ((YelpListener)listener).exitPrice(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YelpVisitor ) return ((YelpVisitor<? extends T>)visitor).visitPrice(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final PriceContext price() throws RecognitionException {
@@ -542,11 +507,6 @@ public class YelpParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof YelpListener ) ((YelpListener)listener).exitName(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YelpVisitor ) return ((YelpVisitor<? extends T>)visitor).visitName(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -593,11 +553,6 @@ public class YelpParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof YelpListener ) ((YelpListener)listener).exitRoot(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YelpVisitor ) return ((YelpVisitor<? extends T>)visitor).visitRoot(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 

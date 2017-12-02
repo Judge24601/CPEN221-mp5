@@ -31,7 +31,6 @@ public class YelpDBTest {
 		try {
 			MP5Db<Business> db = new YelpDB("data/restaurants.json", "data/reviews.json", "data/users.json");
 			System.out.println("hi "+ db.getMatches("in(Telegraph Ave) && (category(Chinese) || category(Italian)) && price <= 2"));
-			Thread.sleep(10000);
 		}catch(IOException e) {
 			fail();
 		}

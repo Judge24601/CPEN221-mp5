@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ca.ece.ubc.cpen221.mp5.ServerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2017-11-30T21:16:38" hostname="LAPTOP-JF7TGPU1" time="6.469">
+<testsuite name="ca.ece.ubc.cpen221.mp5.ServerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2017-12-02T03:09:35" hostname="LAPTOP-JF7TGPU1" time="5.565">
   <properties/>
-  <testcase name="addReviewUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="6.273"/>
-  <testcase name="getRestauarantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.038"/>
-  <testcase name="addUserSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.021"/>
+  <testcase name="addReviewUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="5.424"/>
+  <testcase name="getRestauarantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.023"/>
+  <testcase name="addUserSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.012"/>
   <testcase name="getRestauarantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.005"/>
-  <testcase name="addReviewSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.016"/>
-  <testcase name="addUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.037"/>
-  <testcase name="addRestaurantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.018"/>
-  <testcase name="addRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.015"/>
-  <testcase name="addReviewRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.034"/>
-  <testcase name="addReviewOtherFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.007"/>
+  <testcase name="addReviewSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.005"/>
+  <testcase name="addUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.049"/>
+  <testcase name="addRestaurantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.008"/>
+  <testcase name="addRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.022"/>
+  <testcase name="addReviewRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.006"/>
+  <testcase name="addReviewOtherFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.009"/>
   <system-out><![CDATA[added
 ERR: NO_SUCH_USER
 {"name":"Hi"}
@@ -19,7 +19,7 @@ added
 {"review_id":"1","text":"yoo this place suuccks","rating":5.0}
 no
 Past the lock
-{"name":"ayyy","business_id":"0","latitude":37.8751965,"longitude":-122.2598181,"url":"http://www.yelp.com/biz/chianglai-berkeley","open":true,"price":2.0,"categories":[],"neighborhoods":["UC Campus Area","Thai","Restaurants"],"rating":0.0,"photo_url":"http://s3-media3.ak.yelpcdn.com/bphoto/9fnX3IDOYN_ApzBZg3u0UA/ms.jpg","review_count":0,"full_address":"2505 Hearst Ave\nUC Campus Area\nBerkeley, CA 94701"}
+{"name":"ayyy","business_id":"0","latitude":37.8751965,"longitude":-122.2598181,"url":"http://www.yelp.com/biz/chianglai-berkeley","open":true,"price":2.0,"categories":["Thai","Restaurants"],"neighborhoods":["UC Campus Area"],"schools":["Thai"],"rating":1.0,"type":"business","full_address":"2505 Hearst Ave\nUC Campus Area\nBerkeley, CA 94701","state":"CA","photo_url":"http://s3-media3.ak.yelpcdn.com/bphoto/9fnX3IDOYN_ApzBZg3u0UA/ms.jpg","review_count":0}
 Past the lock
 added
 ERR: NO_SUCH_RESTAURANT
