@@ -8,7 +8,25 @@ import java.util.function.ToDoubleBiFunction;
 
 import javax.json.*;
 
+/**
+ *  Abstraction function: BusinessDB should represent a database able
+ *  to hold data about any type of business. The data it holds is businesses,
+ *  users, and reviews, and it also stores reviews mapped to businesses and
+ *  users for ease of use.
+ */
+
 public abstract class BusinessDB implements MP5Db<Business>{
+
+	/**
+	 * Rep invariant:
+	 * users is not null and contains no null entries
+	 * businesses is not null and contains no null entries
+	 * reviews is not null and contains no null entries
+	 * Maps contain all reviews contained by users and restaurants
+	 * If user in users has review, Map must map review to user
+	 * If restaurant in restaurants has review, Map must map review to restaurant
+	 */
+
 	protected Map<String, Business> businesses;
 	protected Map<String, User> users;
 	protected Map<String, Review> reviews;
