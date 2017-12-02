@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class ca.ece.ubc.cpen221.mp5.ServerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class ca.ece.ubc.cpen221.mp5.ServerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/ca.ece.ubc.cpen221.mp5.html">ca.ece.ubc.cpen221.mp5</a> &gt; ServerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">10</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">6.464s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+<li>
+<a href="#tab2">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">addRestaurantFailure</td>
+<td>0.015s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">addRestaurantSuccess</td>
+<td>0.018s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">addReviewOtherFailure</td>
+<td>0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">addReviewRestaurantFailure</td>
+<td>0.034s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">addReviewSuccess</td>
+<td>0.016s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">addReviewUserFailure</td>
+<td>6.273s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">addUserFailure</td>
+<td>0.037s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">addUserSuccess</td>
+<td>0.021s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getRestauarantFailure</td>
+<td>0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getRestauarantSuccess</td>
+<td>0.038s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>added
+ERR: NO_SUCH_USER
+{&quot;name&quot;:&quot;Hi&quot;}
+{&quot;name&quot;:&quot;Hi&quot;,&quot;user_id&quot;:&quot;0&quot;,&quot;url&quot;:&quot;http://www.yelp.com/user_details?userid=0&quot;,&quot;review_count&quot;:0,&quot;average_stars&quot;:0.0}
+added
+{&quot;review_id&quot;:&quot;1&quot;,&quot;text&quot;:&quot;yoo this place suuccks&quot;,&quot;rating&quot;:5.0}
+no
+Past the lock
+{&quot;name&quot;:&quot;ayyy&quot;,&quot;business_id&quot;:&quot;0&quot;,&quot;latitude&quot;:37.8751965,&quot;longitude&quot;:-122.2598181,&quot;url&quot;:&quot;http://www.yelp.com/biz/chianglai-berkeley&quot;,&quot;open&quot;:true,&quot;price&quot;:2.0,&quot;categories&quot;:[],&quot;neighborhoods&quot;:[&quot;UC Campus Area&quot;,&quot;Thai&quot;,&quot;Restaurants&quot;],&quot;rating&quot;:0.0,&quot;photo_url&quot;:&quot;http://s3-media3.ak.yelpcdn.com/bphoto/9fnX3IDOYN_ApzBZg3u0UA/ms.jpg&quot;,&quot;review_count&quot;:0,&quot;full_address&quot;:&quot;2505 Hearst Ave\nUC Campus Area\nBerkeley, CA 94701&quot;}
+Past the lock
+added
+ERR: NO_SUCH_RESTAURANT
+</pre>
+</span>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>client connected
+Query: ADDREVIEW {&quot;text&quot;: &quot;yoo this place suuccks&quot;, &quot;stars&quot;: 5, &quot;user_id&quot;: &quot;none&quot;, &quot;business_id&quot;: &quot;XD5ybqI0BHcTj5cLQyIPLA&quot;}
+client connected
+Query: GETRESTAURANT HXni0_SFPT1jAoH-Sm78Jg
+client connected
+Query: ADDUSER {&quot;name&quot;:&quot;Hi&quot;}
+client connected
+Query: GETRESTAURANT no
+client connected
+Query: ADDREVIEW {&quot;text&quot;: &quot;yoo this place suuccks&quot;, &quot;stars&quot;: 5, &quot;user_id&quot;: &quot;-w8H1G9raUC0Gg_zvlJDwg&quot;, &quot;business_id&quot;: &quot;XD5ybqI0BHcTj5cLQyIPLA&quot;}
+client connected
+Query: ADDUSER no
+client connected
+Query: ADDRESTAURANT {&quot;open&quot;: true, &quot;url&quot;: &quot;http://www.yelp.com/biz/chianglai-berkeley&quot;, &quot;longitude&quot;: -122.2598181, &quot;neighborhoods&quot;: [&quot;UC Campus Area&quot;], &quot;name&quot;: &quot;ayyy&quot;, &quot;categories&quot;: [&quot;Thai&quot;, &quot;Restaurants&quot;], &quot;state&quot;: &quot;CA&quot;, &quot;type&quot;: &quot;business&quot;, &quot;city&quot;: &quot;Berkeley&quot;, &quot;full_address&quot;: &quot;2505 Hearst Ave\nUC Campus Area\nBerkeley, CA 94701&quot;, &quot;photo_url&quot;: &quot;http://s3-media3.ak.yelpcdn.com/bphoto/9fnX3IDOYN_ApzBZg3u0UA/ms.jpg&quot;, &quot;schools&quot;: [&quot;University of California at Berkeley&quot;], &quot;latitude&quot;: 37.8751965, &quot;price&quot;: 2}
+client connected
+Query: ADDRESTAURANT {&quot;name&quot;: &quot;john&quot;}
+client connected
+Query: ADDREVIEW {&quot;text&quot;: &quot;yoo this place suuccks&quot;, &quot;stars&quot;: 5, &quot;user_id&quot;: &quot;-w8H1G9raUC0Gg_zvlJDwg&quot;, &quot;business_id&quot;: &quot;none&quot;}
+client connected
+Query: ADDREVIEW {&quot;yo&quot;}
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 3.5</a> at 30-Nov-2017 1:16:45 PM</p>
+</div>
+</div>
+</body>
+</html>
