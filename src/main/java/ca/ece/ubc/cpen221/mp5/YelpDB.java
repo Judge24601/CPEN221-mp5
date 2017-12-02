@@ -1,8 +1,16 @@
 package ca.ece.ubc.cpen221.mp5;
 import java.util.*;
+import java.util.concurrent.Future;
 import java.io.*;
 import javax.json.*;
 import javax.json.stream.JsonParsingException;
+import javax.swing.JFrame;
+
+import ca.ece.ubc.cpen221.antlr.*;
+import org.antlr.v4.gui.Trees;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 
 public class YelpDB extends BusinessDB{
@@ -97,6 +105,28 @@ public class YelpDB extends BusinessDB{
 		}catch(JsonParsingException | NullPointerException e) {
 			return "ERR: INVALID_REVIEW_STRING";
 		}
+	}
+	
+	@Override
+	public Set<Business> getMatches(String queryString){
+		@SuppressWarnings("deprecation")
+		CharStream stream = new ANTLRInputStream(queryString);
+		YelpLexer lexer = new YelpLexer(stream);
+		TokenStream tokens = new CommonTokenStream(lexer);
+		YelpParser parser = new YelpParser(tokens);
+		ParseTree tree = parser.root();
+		int numErrors = parser.getNumberOfSyntaxErrors();
+		if(numErrors > 0) {
+			Set<Business> badSet = new HashSet<Business>();
+			badSet.add(null);
+			return badSet;
+		}
+		ParseTreeWalker walker = new ParseTreeWalker();
+		YelpRecursiveListener listener = new YelpRecursiveListener();
+		listener.database = this;
+		walker.walk(listener, tree);
+		//Trees.inspect(tree, parser);
+		return listener.getResult();
 	}
 	
 	public String addUser(String id) {

@@ -5,10 +5,6 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import java.util.*;
-/**
- * Abstraction function: Represents a restaurant business. Holds all the data
- * that is important for a restaurant to have, such as name, location, and rating.
- */
 
 public class Restaurant implements Business{
 	/**
@@ -31,11 +27,13 @@ public class Restaurant implements Business{
 	private double latitude;
 	private List<String> neighbourhoods;
 	private List<String> categories;
+	private List<String> schools;
 	private double price;
 	private double rating;
 	private int reviewCount;
 	private String address;
 	private String photoUrl;
+	private String state;
 	
 	public Restaurant(JsonObject info) throws NullPointerException{
 		try {
@@ -46,10 +44,20 @@ public class Restaurant implements Business{
 		}
 		this.name = info.getString("name");
 		this.price = info.getJsonNumber("price").doubleValue();
+		if(price< 1.0) {
+			this.rating = 1.0;
+		}else if(price > 5.0) {
+			this.rating = 5.0;
+		}
 		try {
 			this.rating = info.getInt("stars");
+			if(rating< 1.0) {
+				this.rating = 1.0;
+			}else if(rating > 5.0) {
+				this.rating = 5.0;
+			}
 		}catch(NullPointerException e) {
-			this.rating = 0.0;
+			this.rating = 1.0;
 		}
 		try {
 			this.reviewCount = info.getInt("review_count");
@@ -62,7 +70,7 @@ public class Restaurant implements Business{
 		this.url = info.getString("url");
 		this.longitude = info.getJsonNumber("longitude").doubleValue();
 		this.latitude = info.getJsonNumber("latitude").doubleValue();
-
+		this.state = info.getString("state");
 		this.neighbourhoods = new ArrayList<String>();
 		JsonArray arr = info.getJsonArray("neighborhoods");
 		for(int i = 0; i < arr.size(); i++) {
@@ -72,10 +80,24 @@ public class Restaurant implements Business{
 		this.categories = new ArrayList<String>();
 		JsonArray arr2 = info.getJsonArray("categories");
 		for(int i = 0; i < arr2.size(); i++) {
-			neighbourhoods.add(arr2.getString(i));
+			categories.add(arr2.getString(i));
 		}
+		this.schools = new ArrayList<String>();
+		JsonArray arr3 = info.getJsonArray("schools");
+		for(int i = 0; i < arr3.size(); i++) {
+			schools.add(arr2.getString(i));
+		}
+		
 
 		this.reviews = new HashSet<String>();
+	}
+	
+	public List<String> getNeighbourhoods() {
+		return new ArrayList<String>(this.neighbourhoods);
+	}
+	
+	public List<String> getCategories() {
+		return new ArrayList<String>(this.categories);
 	}
 	
 	public String getId() {
@@ -106,6 +128,9 @@ public class Restaurant implements Business{
 		return this.price;
 	}
 	
+	public double getRating() {
+		return this.rating;
+	}
 	
 	@Override
 	public String toString() {
@@ -127,10 +152,17 @@ public class Restaurant implements Business{
 			neighBuild.add(ne);
 		}
 		build.add("neighborhoods", neighBuild.build());
+		JsonArrayBuilder schoolBuild = Json.createArrayBuilder();
+		for(String s: this.schools) {
+			schoolBuild.add(s);
+		}
+		build.add("schools", schoolBuild.build());
 		build.add("rating", this.rating);
+		build.add("type", "business");
+		build.add("full_address", this.address);
+		build.add("state", this.state);
 		build.add("photo_url", this.photoUrl);
 		build.add("review_count", this.reviewCount);
-		build.add("full_address", this.address);
 		return build.build().toString();
 	}
 }

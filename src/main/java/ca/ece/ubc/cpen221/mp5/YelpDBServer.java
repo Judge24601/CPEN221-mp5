@@ -5,6 +5,7 @@ import java.io.*;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -129,8 +130,23 @@ public class YelpDBServer {
 	       					result = "oops";
 	       				}	
 	       				break;
+	       			case "QUERY":
+	       				try {
+	       					restLatch.await();
+	       					Set<Business> matched = database.getMatches(line.replaceAll("QUERY " , ""));
+	       					System.err.println(matched);
+	       					if(matched.isEmpty()) {
+	       						result = "ERR: NO_MATCH";
+	       					}else if(matched.contains(null)) {
+	       						result = "ERR: INVALID_QUERY";
+	       					}
+	       					result = matched.toString();
+	       				}catch(InterruptedException e) {
+	       					result = "oops";
+	       				}
+	       				break;
 	       			default:
-	       				result = "ERR: ILLEGAL REQUEST";
+	       				result = "ERR: ILLEGAL_REQUEST";
        			}
 				out.println(result);
 			}

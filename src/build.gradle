@@ -5,6 +5,7 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'antlr'
 
 
 // In this section you declare where to find the dependencies of your project
@@ -13,9 +14,14 @@ repositories {
     mavenCentral()
 }
 
+
+
 dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+    
+    compile group: 'org.antlr', name: 'antlr4-runtime', version: '4.7'
+    antlr "org.antlr:antlr4:4.7"
 }
 
 test.testLogging {

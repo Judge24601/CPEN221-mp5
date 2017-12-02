@@ -9,16 +9,20 @@ public class Query {
 	List<Query> children;
 	String exp;
 	String searchFor;
-	Set<Restaurant> foundSet;
+	Set<Business> foundSet;
 	boolean orFlag = false;
 	//base case
 	public Query(String exp, String searchFor) {
 		this.exp = exp; 
 		this.searchFor = searchFor;
+		this.foundSet = new HashSet<Business>();
 	}
 	
 	public Query(List<Query> children) {
 		this.children = children;
+	}
+	public void addChild(Query child) {
+		this.children.add(child);
 	}
 	
 	public void setAsOr() {
@@ -27,10 +31,10 @@ public class Query {
 	
 	
 	//ONLY Eval OrExps
-	public Set<Restaurant> eval() {
-		Set<Restaurant> results = new HashSet<Restaurant>();
+	public Set<Business> eval() {
+		Set<Business> results = new HashSet<Business>();
 		for(Query andExp: this.children) {
-			Set<Restaurant> baseSet = andExp.children.get(0).foundSet;
+			Set<Business> baseSet = andExp.children.get(0).foundSet;
 			for(Query atom: andExp.children) {
 				if(atom.orFlag) {
 					atom.foundSet = atom.eval();
@@ -40,13 +44,5 @@ public class Query {
 			results.addAll(baseSet);
 		}
 		return results; 
-	}
-	
-	public String baseRequest() {
-		return this.exp + ": " + this.searchFor;
-	}
-	
-	public void baseResult(Set<Restaurant> res) {
-		this.foundSet = res;
 	}
 }

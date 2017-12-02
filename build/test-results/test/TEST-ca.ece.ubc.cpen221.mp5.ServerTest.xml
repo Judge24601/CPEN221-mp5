@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ca.ece.ubc.cpen221.mp5.ServerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2017-12-02T03:09:35" hostname="LAPTOP-JF7TGPU1" time="5.565">
+  <properties/>
+  <testcase name="addReviewUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="5.424"/>
+  <testcase name="getRestauarantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.023"/>
+  <testcase name="addUserSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.012"/>
+  <testcase name="getRestauarantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.005"/>
+  <testcase name="addReviewSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.005"/>
+  <testcase name="addUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.049"/>
+  <testcase name="addRestaurantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.008"/>
+  <testcase name="addRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.022"/>
+  <testcase name="addReviewRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.006"/>
+  <testcase name="addReviewOtherFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.009"/>
+  <system-out><![CDATA[added
+ERR: NO_SUCH_USER
+{"name":"Hi"}
+{"name":"Hi","user_id":"0","url":"http://www.yelp.com/user_details?userid=0","review_count":0,"average_stars":0.0}
+added
+{"review_id":"1","text":"yoo this place suuccks","rating":5.0}
+no
+Past the lock
+{"name":"ayyy","business_id":"0","latitude":37.8751965,"longitude":-122.2598181,"url":"http://www.yelp.com/biz/chianglai-berkeley","open":true,"price":2.0,"categories":["Thai","Restaurants"],"neighborhoods":["UC Campus Area"],"schools":["Thai"],"rating":1.0,"type":"business","full_address":"2505 Hearst Ave\nUC Campus Area\nBerkeley, CA 94701","state":"CA","photo_url":"http://s3-media3.ak.yelpcdn.com/bphoto/9fnX3IDOYN_ApzBZg3u0UA/ms.jpg","review_count":0}
+Past the lock
+added
+ERR: NO_SUCH_RESTAURANT
+]]></system-out>
+  <system-err><![CDATA[client connected
+Query: ADDREVIEW {"text": "yoo this place suuccks", "stars": 5, "user_id": "none", "business_id": "XD5ybqI0BHcTj5cLQyIPLA"}
+client connected
+Query: GETRESTAURANT HXni0_SFPT1jAoH-Sm78Jg
+client connected
+Query: ADDUSER {"name":"Hi"}
+client connected
+Query: GETRESTAURANT no
+client connected
+Query: ADDREVIEW {"text": "yoo this place suuccks", "stars": 5, "user_id": "-w8H1G9raUC0Gg_zvlJDwg", "business_id": "XD5ybqI0BHcTj5cLQyIPLA"}
+client connected
+Query: ADDUSER no
+client connected
+Query: ADDRESTAURANT {"open": true, "url": "http://www.yelp.com/biz/chianglai-berkeley", "longitude": -122.2598181, "neighborhoods": ["UC Campus Area"], "name": "ayyy", "categories": ["Thai", "Restaurants"], "state": "CA", "type": "business", "city": "Berkeley", "full_address": "2505 Hearst Ave\nUC Campus Area\nBerkeley, CA 94701", "photo_url": "http://s3-media3.ak.yelpcdn.com/bphoto/9fnX3IDOYN_ApzBZg3u0UA/ms.jpg", "schools": ["University of California at Berkeley"], "latitude": 37.8751965, "price": 2}
+client connected
+Query: ADDRESTAURANT {"name": "john"}
+client connected
+Query: ADDREVIEW {"text": "yoo this place suuccks", "stars": 5, "user_id": "-w8H1G9raUC0Gg_zvlJDwg", "business_id": "none"}
+client connected
+Query: ADDREVIEW {"yo"}
+]]></system-err>
+</testsuite>

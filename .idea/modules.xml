@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/f17-mp5-mjustice_bjury.iml" filepath="$PROJECT_DIR$/.idea/modules/f17-mp5-mjustice_bjury.iml" />
+      <module fileurl="file://$PROJECT_DIR$/f17-mp5-mjustice_bjury.iml" filepath="$PROJECT_DIR$/f17-mp5-mjustice_bjury.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/f17-mp5-mjustice_bjury_main.iml" filepath="$PROJECT_DIR$/.idea/modules/f17-mp5-mjustice_bjury_main.iml" group="f17-mp5-mjustice_bjury" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/f17-mp5-mjustice_bjury_test.iml" filepath="$PROJECT_DIR$/.idea/modules/f17-mp5-mjustice_bjury_test.iml" group="f17-mp5-mjustice_bjury" />
     </modules>
