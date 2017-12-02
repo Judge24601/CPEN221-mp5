@@ -15,21 +15,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class YelpDB extends BusinessDB{
 
-	public static void main(String[] args){
 
-		try {
-			YelpDB myDB = new YelpDB("data/restaurants.json", "data/reviews.json", "data/users.json");
-			File file = new File("visualize/voronoi.json");
-			FileWriter writer = new FileWriter(file);
-			writer.write(myDB.kMeansClusters_json(4));
-			writer.flush();
-			writer.close();
-		}catch(Exception e){
-			System.out.println("not valid");
-		}
-	}
-
-	//TODO: Figure out how to construct Businesses (Abstract class???)
 	/**
 	 * Constructs the database from 3 Json Files
 	 * Currently only works for a database of business (constructs restaurants booooooo)
@@ -147,7 +133,4 @@ public class YelpDB extends BusinessDB{
 		return new Restaurant(obj);
 	}	
 	
-	public String request(String queryString) {
-		return "Yooooo"; //Change this
-	}
 }
