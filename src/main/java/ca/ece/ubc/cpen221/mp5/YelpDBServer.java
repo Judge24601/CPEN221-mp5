@@ -141,8 +141,9 @@ public class YelpDBServer {
 	       						result = "ERR: NO_MATCH";
 	       					}else if(matched.contains(null)) {
 	       						result = "ERR: INVALID_QUERY";
+	       					}else {
+	       						result = matched.toString();
 	       					}
-	       					result = matched.toString();
 	       				}catch(InterruptedException e) {
 	       					result = "oops";
 	       				}

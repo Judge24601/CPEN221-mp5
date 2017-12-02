@@ -23,3 +23,4 @@ The test file ServerTest is the issue - without it travis should be fine.
 * Basic Requests
 * ANTLR Completion
 * Structured Queries Implementation
+* So many Specifications

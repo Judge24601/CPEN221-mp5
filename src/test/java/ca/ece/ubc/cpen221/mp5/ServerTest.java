@@ -59,15 +59,33 @@ public class ServerTest {
 	}
 
 	@Test
-	public void getRestauarantSuccess() {
+	public void getRestaurantSuccess() {
 		String result = tester("GETRESTAURANT HXni0_SFPT1jAoH-Sm78Jg");
 		assertTrue(result.contains("\"name\":\"Alborz\""));
 	}
 	
 	@Test
-	public void getRestauarantFailure() {
+	public void getRestaurantFailure() {
 		String result = tester("GETRESTAURANT no");
 		assertEquals("ERR: NO_SUCH_RESTAURANT", result);
+	}
+	
+	@Test
+	public void QuerySuccess() {
+		String result = tester("QUERY name(Alborz)");
+		assertTrue(result.contains("\"name\":\"Alborz\""));
+	}
+	
+	@Test
+	public void QueryNone() {
+		String result = tester("QUERY name(Sathish)");
+		assertEquals("ERR: NO_MATCH", result);
+	}
+	
+	@Test
+	public void QueryFail() {
+		String result = tester("QUERY name(Sathish) ||||");
+		assertEquals("ERR: INVALID_QUERY", result);
 	}
 	
 	private String tester(String input) {

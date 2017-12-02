@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ca.ece.ubc.cpen221.mp5.ServerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2017-12-02T05:23:43" hostname="LAPTOP-JF7TGPU1" time="5.449">
+<testsuite name="ca.ece.ubc.cpen221.mp5.ServerTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2017-12-02T06:31:22" hostname="LAPTOP-JF7TGPU1" time="7.917">
   <properties/>
-  <testcase name="addReviewUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="5.24"/>
-  <testcase name="getRestauarantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.023"/>
-  <testcase name="addUserSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.023"/>
-  <testcase name="getRestauarantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.006"/>
-  <testcase name="addReviewSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.019"/>
-  <testcase name="addUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.08"/>
-  <testcase name="addRestaurantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.013"/>
-  <testcase name="addRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.016"/>
-  <testcase name="addReviewRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.02"/>
-  <testcase name="addReviewOtherFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.006"/>
+  <testcase name="addReviewUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="7.287"/>
+  <testcase name="getRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.007"/>
+  <testcase name="addUserSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.021"/>
+  <testcase name="addReviewSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.009"/>
+  <testcase name="addUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.026"/>
+  <testcase name="addRestaurantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.016"/>
+  <testcase name="QuerySuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.397"/>
+  <testcase name="QueryFail" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.031"/>
+  <testcase name="QueryNone" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.038"/>
+  <testcase name="addRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.015"/>
+  <testcase name="addReviewRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.01"/>
+  <testcase name="addReviewOtherFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.011"/>
+  <testcase name="getRestaurantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.045"/>
   <system-out><![CDATA[added
 ERR: NO_SUCH_USER
 {"name":"Hi"}
@@ -27,11 +30,9 @@ ERR: NO_SUCH_RESTAURANT
   <system-err><![CDATA[client connected
 Query: ADDREVIEW {"text": "yoo this place suuccks", "stars": 5, "user_id": "none", "business_id": "XD5ybqI0BHcTj5cLQyIPLA"}
 client connected
-Query: GETRESTAURANT HXni0_SFPT1jAoH-Sm78Jg
+Query: GETRESTAURANT no
 client connected
 Query: ADDUSER {"name":"Hi"}
-client connected
-Query: GETRESTAURANT no
 client connected
 Query: ADDREVIEW {"text": "yoo this place suuccks", "stars": 5, "user_id": "-w8H1G9raUC0Gg_zvlJDwg", "business_id": "XD5ybqI0BHcTj5cLQyIPLA"}
 client connected
@@ -39,10 +40,23 @@ Query: ADDUSER no
 client connected
 Query: ADDRESTAURANT {"open": true, "url": "http://www.yelp.com/biz/chianglai-berkeley", "longitude": -122.2598181, "neighborhoods": ["UC Campus Area"], "name": "ayyy", "categories": ["Thai", "Restaurants"], "state": "CA", "type": "business", "city": "Berkeley", "full_address": "2505 Hearst Ave\nUC Campus Area\nBerkeley, CA 94701", "photo_url": "http://s3-media3.ak.yelpcdn.com/bphoto/9fnX3IDOYN_ApzBZg3u0UA/ms.jpg", "schools": ["University of California at Berkeley"], "latitude": 37.8751965, "price": 2}
 client connected
+Query: QUERY name(Alborz)
+[{"name":"Alborz","business_id":"HXni0_SFPT1jAoH-Sm78Jg","latitude":37.8701999,"longitude":-122.266645,"url":"http://www.yelp.com/biz/alborz-berkeley","open":true,"price":4.0,"categories":["Persian/Iranian","Restaurants"],"neighborhoods":["Downtown Berkeley","UC Campus Area"],"schools":["Persian/Iranian"],"rating":3.0,"type":"business","full_address":"2142 Center St\nDowntown Berkeley\nBerkeley, CA 94704","state":"CA","photo_url":"http://s3-media2.ak.yelpcdn.com/bphoto/YOmjJWRKPMmgv4ctkNkBoA/ms.jpg","review_count":172}]
+client connected
+Query: QUERY name(Sathish) ||||
+line 1:16 mismatched input '||' expecting {'rating', 'in', 'name', 'category', 'price', '('}
+line 1:18 mismatched input '<EOF>' expecting {'rating', 'in', 'name', 'category', 'price', '('}
+[null]
+client connected
+Query: QUERY name(Sathish)
+[]
+client connected
 Query: ADDRESTAURANT {"name": "john"}
 client connected
 Query: ADDREVIEW {"text": "yoo this place suuccks", "stars": 5, "user_id": "-w8H1G9raUC0Gg_zvlJDwg", "business_id": "none"}
 client connected
 Query: ADDREVIEW {"yo"}
+client connected
+Query: GETRESTAURANT HXni0_SFPT1jAoH-Sm78Jg
 ]]></system-err>
 </testsuite>
