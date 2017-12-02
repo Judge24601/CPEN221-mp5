@@ -25,7 +25,7 @@ public class YelpDB extends BusinessDB{
 			writer.flush();
 			writer.close();
 		}catch(Exception e){
-			System.out.println("sdfweoifhohfofhofh");
+			System.out.println("not valid");
 		}
 	}
 

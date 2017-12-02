@@ -6,15 +6,22 @@ import javax.json.JsonObjectBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
+
 /**
- * 
- * Rep Invariant: None of the fields can be null
- * each entry in reviews is not null and a valid review id that exists in the same database Restaurant exists in
- * Abstraction Function:
- * Represents a user as a "set" of fields
- *
+ * Abstraction function: Represents a user for the database. Stores
+ * all the information relevant to a user, such as name, id, and number of
+ * reviews written.
  */
+
 public class User {
+	/**
+	 *
+	 * Rep Invariant: None of the fields can be null
+	 * each entry in reviews is not null and a valid review id that exists in the same database Restaurant exists in
+	 * Abstraction Function:
+	 * Represents a user as a "set" of fields
+	 *
+	 */
 	private static Long baseId = 0l;
 	private String id;
 	private String name;
