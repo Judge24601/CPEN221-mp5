@@ -12,7 +12,6 @@ import javax.json.JsonObjectBuilder;
  *  Abstraction Function:
  * Represents a review as an id, a text, and a rating
  *
- *
  */
 public class Review {
 	private static Long baseId = 0l;

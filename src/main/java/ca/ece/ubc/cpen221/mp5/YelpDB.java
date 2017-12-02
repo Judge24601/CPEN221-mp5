@@ -15,6 +15,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class YelpDB extends BusinessDB{
 
+
 	/**
 	 * Constructs the database from 3 Json Files
 	 * Currently only works for a database of business (constructs restaurants booooooo)

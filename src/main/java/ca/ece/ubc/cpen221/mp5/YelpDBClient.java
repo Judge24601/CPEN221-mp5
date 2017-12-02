@@ -5,10 +5,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- * FibonacciClient is a client that sends requests to the FibonacciServer
- * and interprets its replies.
- * A new FibonacciClient is "open" until the close() method is called,
- * at which point it is "closed" and may not be used further.
+ * Abstraction function: YelpDBClient makes requests to the server in order to get replies.
  */
 public class YelpDBClient {
     private Socket socket;
@@ -17,7 +14,7 @@ public class YelpDBClient {
     // Rep invariant: socket, in, out != null
     
     /**
-     * Make a FibonacciClient and connect it to a server running on
+     * Make a YelbDBClient and connect it to a server running on
      * hostname at the specified port.
      * @throws IOException if can't connect
      */

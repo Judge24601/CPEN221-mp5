@@ -5,19 +5,18 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import java.util.*;
-/**
- * 
- * Rep Invariant:
- * none of the fields can be null
- * price must be between 1 and 5
- * rating must be between 1 and 5
- * reviews, neighbourhods and categories contain no null entries
- * each entry in reviews is a valid review id that exists in the same database Restaurant exists in
- * Abstraction Function:
- * Represents a restaurant as a "set" of fields
- *
- */
+
 public class Restaurant implements Business{
+	/**
+	 *
+	 * Rep Invariant:
+	 * none of the fields can be null
+	 * reviews, neighbourhods and categories contain no null entries
+	 * each entry in reviews is a valid review id that exists in the same database Restaurant exists in
+	 * Abstraction Function:
+	 * Represents a restaurant as a "set" of fields
+	 *
+	 */
 	private static Long id = 0l;
 	private String name;
 	private Set<String> reviews;
