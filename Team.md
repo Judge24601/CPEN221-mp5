@@ -1,11 +1,11 @@
-#Work Division:
-##Miles:
+# Work Division
+## Miles
 * Preliminary Database Construction
 * JSON parsing
 * K-Means Clustering
 * ANTLR setup
 
-##Braeden:
+## Braeden:
 * Database Completion
 * Predictor Function
 * Server Construction
