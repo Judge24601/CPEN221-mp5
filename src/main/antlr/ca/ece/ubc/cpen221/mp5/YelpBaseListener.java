@@ -1,13 +1,4 @@
-package ca.ece.ubc.cpen221.mp5;
-// Generated from C:/Users/Miles/Desktop/CPEN_221/f17-mp5-mjustice_bjury/src/main/antlr\Yelp.g4 by ANTLR 4.7
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EmptyStackException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Stack;
-import java.util.stream.Collectors;
+package ca.ece.ubc.cpen221.mp5;// Generated from C:/Users/Miles/Desktop/CPEN_221/f17-mp5-mjustice_bjury/src/main/antlr\Yelp.g4 by ANTLR 4.7
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -24,38 +15,25 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	private Query main;
-	private Stack<List<Query>> orList = new Stack<List<Query>>();
-	private Stack<List<Query>> andList = new Stack<List<Query>>();
-	public YelpDB database;
-	@Override public void enterOrExpr(YelpParser.OrExprContext ctx) { 
-		this.orList.push(new ArrayList<Query>());
-	}
+	@Override public void enterOrExpr(YelpParser.OrExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOrExpr(YelpParser.OrExprContext ctx) { 
-		Query orExpr = new Query(orList.pop());
-	}
+	@Override public void exitOrExpr(YelpParser.OrExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAndExpr(YelpParser.AndExprContext ctx) {
-		this.andList.push(new ArrayList<Query>());
-	}
+	@Override public void enterAndExpr(YelpParser.AndExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAndExpr(YelpParser.AndExprContext ctx) { 
-		Query andExpr = new Query(andList.pop());
-		orList.peek().add(andExpr);
-	}
+	@Override public void exitAndExpr(YelpParser.AndExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -73,14 +51,7 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIn(YelpParser.InContext ctx) { 
-		Query in = new Query("in", ctx.getText());
-		in.foundSet =(database.businesses.values().stream()
-				.map(x -> (Restaurant)x)
-				.filter(x -> x.getNeighbourhoods().contains(in.searchFor))
-				.collect(Collectors.toSet()));
-		andList.peek().add(in);
-	}
+	@Override public void enterIn(YelpParser.InContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -92,14 +63,7 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCategory(YelpParser.CategoryContext ctx) { 
-		Query cat = new Query("category", ctx.getText());
-		cat.foundSet =(database.businesses.values().stream()
-				.map(x -> (Restaurant)x)
-				.filter(x -> x.getCategories().contains(cat.searchFor))
-				.collect(Collectors.toSet()));
-		andList.peek().add(cat);
-	}
+	@Override public void enterCategory(YelpParser.CategoryContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -111,15 +75,7 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	//not right
-	@Override public void enterRating(YelpParser.RatingContext ctx) {
-		Query rat = new Query("rating", ctx.getText());
-		rat.foundSet =(database.businesses.values().stream()
-				.map(x -> (Restaurant)x)
-				.filter(x -> x.getCategories().contains(rat.searchFor))
-				.collect(Collectors.toSet()));
-		andList.peek().add(rat);
-	}
+	@Override public void enterRating(YelpParser.RatingContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -155,23 +111,13 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRoot(YelpParser.RootContext ctx) {
-		main = new Query(new ArrayList<Query>());
-	}
+	@Override public void enterRoot(YelpParser.RootContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRoot(YelpParser.RootContext ctx) { 
-		try {
-			for(Query andExpr: andList.pop()) {
-				main.addChild(andExpr);
-			}
-		}catch(EmptyStackException e) {
-			
-		}
-	}
+	@Override public void exitRoot(YelpParser.RootContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

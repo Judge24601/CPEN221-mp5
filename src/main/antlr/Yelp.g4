@@ -26,15 +26,15 @@ grammar Yelp;
  * Parser rules
  */
 
-orExpr : andExpr(OR andExpr)*;
-andExpr : atom(AND atom)*;
-atom : in|category|rating|price|name|LEFT orExpr RIGHT;
+orExpr : andExpr (OR andExpr)*;
+andExpr : atom (AND atom)*;
+atom : (in|category|rating|price|name|LEFT orExpr RIGHT);
 in : IN LEFT STRING RIGHT;
 category : CATEGORY LEFT STRING RIGHT;
 rating : RATING LEFT STRING RIGHT;
 price : PRICE INEQ NUM;
 name : NAME LEFT STRING RIGHT;
-root : atom EOF;
+root : orExpr EOF;
 
  /*
   * Lexer rules
@@ -42,15 +42,16 @@ root : atom EOF;
 
 OR : '||';
 AND : '&&';
-LEFT : '(';
-RIGHT : ')';
-
-NAME : 'name';
-NUM : [0-9]+;
-INEQ :  '>'|'>='|'<'|'<='|'=';
 RATING : 'rating';
 IN : 'in';
+NAME : 'name';
 CATEGORY : 'category';
 PRICE : 'price';
+LEFT : '(';
+RIGHT : ')';
+INEQ :  '>'|'>='|'<'|'<='|'=';
+NUM : [1-5];
+STRING : [A-Za-z0-9]+ WHT* [A-Za-z0-9]+ ;
+WHT : [ \t\n\r]+ -> skip;
 
-STRING : [A-Za-z 0-9]+;
+

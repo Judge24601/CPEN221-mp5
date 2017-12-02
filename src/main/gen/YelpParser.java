@@ -16,8 +16,8 @@ public class YelpParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		OR=1, AND=2, LEFT=3, RIGHT=4, NAME=5, NUM=6, INEQ=7, RATING=8, IN=9, CATEGORY=10, 
-		PRICE=11, STRING=12;
+		OR=1, AND=2, RATING=3, IN=4, NAME=5, CATEGORY=6, PRICE=7, LEFT=8, RIGHT=9, 
+		INEQ=10, NUM=11, STRING=12, WHT=13;
 	public static final int
 		RULE_orExpr = 0, RULE_andExpr = 1, RULE_atom = 2, RULE_in = 3, RULE_category = 4, 
 		RULE_rating = 5, RULE_price = 6, RULE_name = 7, RULE_root = 8;
@@ -27,12 +27,12 @@ public class YelpParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'||'", "'&&'", "'('", "')'", "'name'", null, null, "'rating'", 
-		"'in'", "'category'", "'price'"
+		null, "'||'", "'&&'", "'rating'", "'in'", "'name'", "'category'", "'price'", 
+		"'('", "')'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, "OR", "AND", "LEFT", "RIGHT", "NAME", "NUM", "INEQ", "RATING", "IN", 
-		"CATEGORY", "PRICE", "STRING"
+		null, "OR", "AND", "RATING", "IN", "NAME", "CATEGORY", "PRICE", "LEFT", 
+		"RIGHT", "INEQ", "NUM", "STRING", "WHT"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -263,46 +263,42 @@ public class YelpParser extends Parser {
 		AtomContext _localctx = new AtomContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_atom);
 		try {
+			enterOuterAlt(_localctx, 1);
+			{
 			setState(43);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case IN:
-				enterOuterAlt(_localctx, 1);
 				{
 				setState(34);
 				in();
 				}
 				break;
 			case CATEGORY:
-				enterOuterAlt(_localctx, 2);
 				{
 				setState(35);
 				category();
 				}
 				break;
 			case RATING:
-				enterOuterAlt(_localctx, 3);
 				{
 				setState(36);
 				rating();
 				}
 				break;
 			case PRICE:
-				enterOuterAlt(_localctx, 4);
 				{
 				setState(37);
 				price();
 				}
 				break;
 			case NAME:
-				enterOuterAlt(_localctx, 5);
 				{
 				setState(38);
 				name();
 				}
 				break;
 			case LEFT:
-				enterOuterAlt(_localctx, 6);
 				{
 				setState(39);
 				match(LEFT);
@@ -314,6 +310,7 @@ public class YelpParser extends Parser {
 				break;
 			default:
 				throw new NoViableAltException(this);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -580,8 +577,8 @@ public class YelpParser extends Parser {
 	}
 
 	public static class RootContext extends ParserRuleContext {
-		public AtomContext atom() {
-			return getRuleContext(AtomContext.class,0);
+		public OrExprContext orExpr() {
+			return getRuleContext(OrExprContext.class,0);
 		}
 		public TerminalNode EOF() { return getToken(YelpParser.EOF, 0); }
 		public RootContext(ParserRuleContext parent, int invokingState) {
@@ -610,7 +607,7 @@ public class YelpParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(69);
-			atom();
+			orExpr();
 			setState(70);
 			match(EOF);
 			}
@@ -627,7 +624,7 @@ public class YelpParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\16K\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\17K\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2\3\2"+
 		"\7\2\30\n\2\f\2\16\2\33\13\2\3\3\3\3\3\3\7\3 \n\3\f\3\16\3#\13\3\3\4\3"+
 		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4.\n\4\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3"+
@@ -638,13 +635,13 @@ public class YelpParser extends Parser {
 		"\2\30\33\3\2\2\2\31\27\3\2\2\2\31\32\3\2\2\2\32\3\3\2\2\2\33\31\3\2\2"+
 		"\2\34!\5\6\4\2\35\36\7\4\2\2\36 \5\6\4\2\37\35\3\2\2\2 #\3\2\2\2!\37\3"+
 		"\2\2\2!\"\3\2\2\2\"\5\3\2\2\2#!\3\2\2\2$.\5\b\5\2%.\5\n\6\2&.\5\f\7\2"+
-		"\'.\5\16\b\2(.\5\20\t\2)*\7\5\2\2*+\5\2\2\2+,\7\6\2\2,.\3\2\2\2-$\3\2"+
+		"\'.\5\16\b\2(.\5\20\t\2)*\7\n\2\2*+\5\2\2\2+,\7\13\2\2,.\3\2\2\2-$\3\2"+
 		"\2\2-%\3\2\2\2-&\3\2\2\2-\'\3\2\2\2-(\3\2\2\2-)\3\2\2\2.\7\3\2\2\2/\60"+
-		"\7\13\2\2\60\61\7\5\2\2\61\62\7\16\2\2\62\63\7\6\2\2\63\t\3\2\2\2\64\65"+
-		"\7\f\2\2\65\66\7\5\2\2\66\67\7\16\2\2\678\7\6\2\28\13\3\2\2\29:\7\n\2"+
-		"\2:;\7\5\2\2;<\7\16\2\2<=\7\6\2\2=\r\3\2\2\2>?\7\r\2\2?@\7\t\2\2@A\7\b"+
-		"\2\2A\17\3\2\2\2BC\7\7\2\2CD\7\5\2\2DE\7\16\2\2EF\7\6\2\2F\21\3\2\2\2"+
-		"GH\5\6\4\2HI\7\2\2\3I\23\3\2\2\2\5\31!-";
+		"\7\6\2\2\60\61\7\n\2\2\61\62\7\16\2\2\62\63\7\13\2\2\63\t\3\2\2\2\64\65"+
+		"\7\b\2\2\65\66\7\n\2\2\66\67\7\16\2\2\678\7\13\2\28\13\3\2\2\29:\7\5\2"+
+		"\2:;\7\n\2\2;<\7\16\2\2<=\7\13\2\2=\r\3\2\2\2>?\7\t\2\2?@\7\f\2\2@A\7"+
+		"\r\2\2A\17\3\2\2\2BC\7\7\2\2CD\7\n\2\2DE\7\16\2\2EF\7\13\2\2F\21\3\2\2"+
+		"\2GH\5\2\2\2HI\7\2\2\3I\23\3\2\2\2\5\31!-";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
