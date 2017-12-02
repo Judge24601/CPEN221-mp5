@@ -319,6 +319,15 @@ public abstract class BusinessDB implements MP5Db<Business>{
 				double a = meanY - b*meanX;
 				@SuppressWarnings("unused")
 				double r_2 = (sxy*sxy)/(sxx*syy);
-				return (x, y) -> a*((BusinessDB)x).businesses.get(y).getPrice() + b;
+				return (x, y) -> {
+					double z = b*((BusinessDB)x).businesses.get(y).getPrice() + a;
+					if(z > 5) {
+						return 5;
+					}else if(z < 1) {
+						return 1;
+					}else {
+						return z;
+					}
+				};
 	}
 }

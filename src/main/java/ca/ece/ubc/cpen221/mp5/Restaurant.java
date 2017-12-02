@@ -34,6 +34,7 @@ public class Restaurant implements Business{
 	private int reviewCount;
 	private String address;
 	private String photoUrl;
+	private String state;
 	
 	public Restaurant(JsonObject info) throws NullPointerException{
 		try {
@@ -70,7 +71,7 @@ public class Restaurant implements Business{
 		this.url = info.getString("url");
 		this.longitude = info.getJsonNumber("longitude").doubleValue();
 		this.latitude = info.getJsonNumber("latitude").doubleValue();
-
+		this.state = info.getString("state");
 		this.neighbourhoods = new ArrayList<String>();
 		JsonArray arr = info.getJsonArray("neighborhoods");
 		for(int i = 0; i < arr.size(); i++) {
@@ -159,9 +160,10 @@ public class Restaurant implements Business{
 		build.add("schools", schoolBuild.build());
 		build.add("rating", this.rating);
 		build.add("type", "business");
+		build.add("full_address", this.address);
+		build.add("state", this.state);
 		build.add("photo_url", this.photoUrl);
 		build.add("review_count", this.reviewCount);
-		build.add("full_address", this.address);
 		return build.build().toString();
 	}
 }

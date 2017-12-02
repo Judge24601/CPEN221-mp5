@@ -39,7 +39,6 @@ public class Query {
 				if(atom.orFlag) {
 					atom.foundSet = atom.eval();
 				}
-				System.out.println(atom.foundSet);
 				baseSet.retainAll(atom.foundSet);
 			}
 			results.addAll(baseSet);

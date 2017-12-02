@@ -109,12 +109,17 @@ public class YelpDB extends BusinessDB{
 		TokenStream tokens = new CommonTokenStream(lexer);
 		YelpParser parser = new YelpParser(tokens);
 		ParseTree tree = parser.root();
+		int numErrors = parser.getNumberOfSyntaxErrors();
+		if(numErrors > 0) {
+			Set<Business> badSet = new HashSet<Business>();
+			badSet.add(null);
+			return badSet;
+		}
 		ParseTreeWalker walker = new ParseTreeWalker();
 		YelpBaseListener listener = new YelpBaseListener();
 		listener.database = this;
 		walker.walk(listener, tree);
-		Trees.inspect(tree, parser);
-		System.out.println(tree.toStringTree(parser));
+		//Trees.inspect(tree, parser);
 		return listener.getResult();
 	}
 	
