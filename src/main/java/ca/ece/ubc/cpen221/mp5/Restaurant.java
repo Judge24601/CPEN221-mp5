@@ -80,7 +80,7 @@ public class Restaurant implements Business{
 		this.categories = new ArrayList<String>();
 		JsonArray arr2 = info.getJsonArray("categories");
 		for(int i = 0; i < arr2.size(); i++) {
-			neighbourhoods.add(arr2.getString(i));
+			categories.add(arr2.getString(i));
 		}
 		this.schools = new ArrayList<String>();
 		JsonArray arr3 = info.getJsonArray("schools");
@@ -128,6 +128,9 @@ public class Restaurant implements Business{
 		return this.price;
 	}
 	
+	public double getRating() {
+		return this.rating;
+	}
 	
 	@Override
 	public String toString() {

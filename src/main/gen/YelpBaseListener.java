@@ -1,4 +1,14 @@
-// Generated from C:/Users/Miles/Desktop/CPEN_221/f17-mp5-mjustice_bjury/src/main/antlr\Yelp.g4 by ANTLR 4.7
+package ca.ece.ubc.cpen221.mp5;
+// Genepried from C:/Users/Miles/Desktop/CPEN_221/f17-mp5-mjustice_bjury/src/main/antlr\Yelp.g4 by ANTLR 4.7
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EmptyStackException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Stack;
+import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -15,25 +25,42 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOrExpr(YelpParser.OrExprContext ctx) { }
+	private Query main;
+	private Stack<List<Query>> orList = new Stack<List<Query>>();
+	private Stack<List<Query>> andList = new Stack<List<Query>>();
+	public YelpDB database;
+	@Override public void enterOrExpr(YelpParser.OrExprContext ctx) { 
+		this.orList.push(new ArrayList<Query>());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOrExpr(YelpParser.OrExprContext ctx) { }
+	@Override public void exitOrExpr(YelpParser.OrExprContext ctx) { 
+		try {
+			Query orExpr = new Query(orList.pop());
+		}catch(EmptyStackException e) {
+			//Root node
+		}
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAndExpr(YelpParser.AndExprContext ctx) { }
+	@Override public void enterAndExpr(YelpParser.AndExprContext ctx) {
+		this.andList.push(new ArrayList<Query>());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAndExpr(YelpParser.AndExprContext ctx) { }
+	@Override public void exitAndExpr(YelpParser.AndExprContext ctx) { 
+		Query andExpr = new Query(andList.pop());
+		orList.peek().add(andExpr);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -51,7 +78,14 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIn(YelpParser.InContext ctx) { }
+	@Override public void enterIn(YelpParser.InContext ctx) { 
+		Query in = new Query("in", ctx.getText());
+		in.foundSet =(database.businesses.values().stream()
+				.map(x -> (Restaurant)x)
+				.filter(x -> x.getNeighbourhoods().contains(in.searchFor.split("[\\(\\)]")[1]))
+				.collect(Collectors.toSet()));
+		andList.peek().add(in);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -63,7 +97,14 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCategory(YelpParser.CategoryContext ctx) { }
+	@Override public void enterCategory(YelpParser.CategoryContext ctx) { 
+		Query cat = new Query("category", ctx.getText());
+		cat.foundSet =(database.businesses.values().stream()
+				.map(x -> (Restaurant)x)
+				.filter(x -> x.getCategories().contains(cat.searchFor.split("[\\(\\)]")[1]))
+				.collect(Collectors.toSet()));
+		andList.peek().add(cat);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -75,7 +116,45 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRating(YelpParser.RatingContext ctx) { }
+	//not right
+	@Override public void enterRating(YelpParser.RatingContext ctx) {
+		Query pri = new Query("priing", ctx.getText());
+		String ineq = pri.searchFor.replaceAll("price", "").replaceAll("[0-9 ]+", "");
+		switch(ineq) {
+		case "<":
+			pri.foundSet =(database.businesses.values().stream()
+					.map(x -> (Restaurant)x)
+					.filter(x -> x.getRating() < Integer.parseInt(pri.searchFor))
+					.collect(Collectors.toSet()));
+			break;
+		case "<=":
+			pri.foundSet =(database.businesses.values().stream()
+					.map(x -> (Restaurant)x)
+					.filter(x -> x.getRating() <= Integer.parseInt(pri.searchFor))
+					.collect(Collectors.toSet()));
+			break;
+		case ">":
+			pri.foundSet =(database.businesses.values().stream()
+					.map(x -> (Restaurant)x)
+					.filter(x -> x.getRating() > Integer.parseInt(pri.searchFor))
+					.collect(Collectors.toSet()));
+			break;
+		case ">=":
+			pri.foundSet =(database.businesses.values().stream()
+					.map(x -> (Restaurant)x)
+					.filter(x -> x.getRating() >= Integer.parseInt(pri.searchFor))
+					.collect(Collectors.toSet()));
+			break;
+		case "=":
+			pri.foundSet =(database.businesses.values().stream()
+					.map(x -> (Restaurant)x)
+					.filter(x -> x.getRating() == Integer.parseInt(pri.searchFor))
+					.collect(Collectors.toSet()));
+			break;
+		}
+		
+		andList.peek().add(pri);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -87,7 +166,43 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPrice(YelpParser.PriceContext ctx) { }
+	@Override public void enterPrice(YelpParser.PriceContext ctx) { 
+		Query pri = new Query("priing", ctx.getText());
+		String ineq = pri.searchFor.replaceAll("price", "").replaceAll("[0-9 ]+", "");
+		switch(ineq) {
+		case "<":
+			pri.foundSet =(database.businesses.values().stream()
+					.map(x -> (Restaurant)x)
+					.filter(x -> x.getPrice() < Integer.parseInt(pri.searchFor))
+					.collect(Collectors.toSet()));
+			break;
+		case "<=":
+			pri.foundSet =(database.businesses.values().stream()
+					.map(x -> (Restaurant)x)
+					.filter(x -> x.getPrice() <= Integer.parseInt(pri.searchFor))
+					.collect(Collectors.toSet()));
+			break;
+		case ">":
+			pri.foundSet =(database.businesses.values().stream()
+					.map(x -> (Restaurant)x)
+					.filter(x -> x.getPrice() > Integer.parseInt(pri.searchFor))
+					.collect(Collectors.toSet()));
+			break;
+		case ">=":
+			pri.foundSet =(database.businesses.values().stream()
+					.map(x -> (Restaurant)x)
+					.filter(x -> x.getPrice() >= Integer.parseInt(pri.searchFor))
+					.collect(Collectors.toSet()));
+			break;
+		case "=":
+			pri.foundSet =(database.businesses.values().stream()
+					.map(x -> (Restaurant)x)
+					.filter(x -> x.getPrice() == Integer.parseInt(pri.searchFor))
+					.collect(Collectors.toSet()));
+			break;
+		}
+		andList.peek().add(pri);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -99,7 +214,14 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterName(YelpParser.NameContext ctx) { }
+	@Override public void enterName(YelpParser.NameContext ctx) { 
+		Query nam = new Query("name", ctx.getText());
+		nam.foundSet =(database.businesses.values().stream()
+				.map(x -> (Restaurant)x)
+				.filter(x -> x.getName().equals((nam.searchFor.split("[\\(\\)]")[1])))
+				.collect(Collectors.toSet()));
+		andList.peek().add(nam);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -111,13 +233,21 @@ public class YelpBaseListener implements YelpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRoot(YelpParser.RootContext ctx) { }
+	@Override public void enterRoot(YelpParser.RootContext ctx) {
+		
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRoot(YelpParser.RootContext ctx) { }
+	@Override public void exitRoot(YelpParser.RootContext ctx) { 
+		main = new Query(orList.pop());
+	}
+	
+	public Set<Business> getResult(){
+		return main.eval();
+	}
 
 	/**
 	 * {@inheritDoc}

@@ -1,4 +1,5 @@
-package ca.ece.ubc.cpen221.mp5;// Generated from C:/Users/Miles/Desktop/CPEN_221/f17-mp5-mjustice_bjury/src/main/antlr\Yelp.g4 by ANTLR 4.7
+// Generated from C:/Users/Miles/Desktop/CPEN_221/f17-mp5-mjustice_bjury/src/main/antlr\Yelp.g4 by ANTLR 4.7
+package ca.ece.ubc.cpen221.mp5;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**

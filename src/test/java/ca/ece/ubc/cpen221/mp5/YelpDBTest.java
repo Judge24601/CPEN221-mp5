@@ -30,7 +30,7 @@ public class YelpDBTest {
 	public void baseGetMatches() throws InterruptedException {
 		try {
 			MP5Db<Business> db = new YelpDB("data/restaurants.json", "data/reviews.json", "data/users.json");
-			db.getMatches("in(Telegraph Ave) && (category(Chinese) || category(Italian)) && price <= 2");
+			System.out.println("hi "+ db.getMatches("in(Telegraph Ave) && (category(Chinese) || category(Italian)) && price <= 2"));
 			Thread.sleep(10000);
 		}catch(IOException e) {
 			fail();

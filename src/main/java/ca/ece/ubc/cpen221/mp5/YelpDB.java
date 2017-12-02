@@ -110,10 +110,12 @@ public class YelpDB extends BusinessDB{
 		YelpParser parser = new YelpParser(tokens);
 		ParseTree tree = parser.root();
 		ParseTreeWalker walker = new ParseTreeWalker();
-		YelpListener listener = new YelpBaseListener();
+		YelpBaseListener listener = new YelpBaseListener();
+		listener.database = this;
+		walker.walk(listener, tree);
 		Trees.inspect(tree, parser);
 		System.out.println(tree.toStringTree(parser));
-		return null;
+		return listener.getResult();
 	}
 	
 	public String addUser(String id) {

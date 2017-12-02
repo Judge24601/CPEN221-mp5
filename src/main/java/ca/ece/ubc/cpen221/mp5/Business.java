@@ -19,6 +19,8 @@ public interface Business {
 	
 	public List<String> getCategories();
 	
+	public double getRating();
+	
 	public double getPrice();
 	
 	public Boolean isOpen();
