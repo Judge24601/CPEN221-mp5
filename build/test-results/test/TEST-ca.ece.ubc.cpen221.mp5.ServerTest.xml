@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ca.ece.ubc.cpen221.mp5.ServerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2017-12-02T03:09:35" hostname="LAPTOP-JF7TGPU1" time="5.565">
+<testsuite name="ca.ece.ubc.cpen221.mp5.ServerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2017-12-02T05:23:43" hostname="LAPTOP-JF7TGPU1" time="5.449">
   <properties/>
-  <testcase name="addReviewUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="5.424"/>
+  <testcase name="addReviewUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="5.24"/>
   <testcase name="getRestauarantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.023"/>
-  <testcase name="addUserSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.012"/>
-  <testcase name="getRestauarantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.005"/>
-  <testcase name="addReviewSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.005"/>
-  <testcase name="addUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.049"/>
-  <testcase name="addRestaurantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.008"/>
-  <testcase name="addRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.022"/>
-  <testcase name="addReviewRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.006"/>
-  <testcase name="addReviewOtherFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.009"/>
+  <testcase name="addUserSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.023"/>
+  <testcase name="getRestauarantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.006"/>
+  <testcase name="addReviewSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.019"/>
+  <testcase name="addUserFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.08"/>
+  <testcase name="addRestaurantSuccess" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.013"/>
+  <testcase name="addRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.016"/>
+  <testcase name="addReviewRestaurantFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.02"/>
+  <testcase name="addReviewOtherFailure" classname="ca.ece.ubc.cpen221.mp5.ServerTest" time="0.006"/>
   <system-out><![CDATA[added
 ERR: NO_SUCH_USER
 {"name":"Hi"}

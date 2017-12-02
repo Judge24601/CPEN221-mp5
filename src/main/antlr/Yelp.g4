@@ -31,7 +31,7 @@ andExpr : atom (AND atom)*;
 atom : (in|category|rating|price|name|LEFT orExpr RIGHT);
 in : IN LEFT STRING RIGHT;
 category : CATEGORY LEFT STRING RIGHT;
-rating : RATING LEFT STRING RIGHT;
+rating : RATING INEQ NUM;
 price : PRICE INEQ NUM;
 name : NAME LEFT STRING RIGHT;
 root : orExpr EOF;
