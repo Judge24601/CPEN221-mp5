@@ -14,6 +14,7 @@ The test file ServerTest is the issue - without it travis should be fine.
 * JSON parsing
 * K-Means Clustering
 * ANTLR setup
+* Rep Invariants/Abstraction Functions
 
 ## Braeden:
 * Database Completion
@@ -23,4 +24,4 @@ The test file ServerTest is the issue - without it travis should be fine.
 * Basic Requests
 * ANTLR Completion
 * Structured Queries Implementation
-* So many Specifications
+* So many Specifications & Unit Testing
