@@ -50,7 +50,19 @@ public class YelpDBTest {
 	public void getNoMatches() throws InterruptedException {
 		try {
 			MP5Db<Business> db = new YelpDB("data/restaurants.json", "data/reviews.json", "data/users.json");
-			assertTrue(db.getMatches("in(SathishLand) && (category(Chinese) || category(Italian)) && price <= 2").isEmpty());
+			assertTrue(db.getMatches("in(SathishLand) && (category(Chinese) || category(Italian)) && price > 2 && rating < 3").isEmpty());
+			assertTrue(db.getMatches("in(Telegraph Ave) && (category(Sathish) || category(CPEN)) && price = 2 && rating <= 3").isEmpty());
+			assertTrue(db.getMatches("name(yooooo) && (category(Sathish) || category(CPEN)) && price >= 2 && rating > 3").isEmpty());
+		}catch(IOException e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void predictorTest() {
+		try {
+			MP5Db<Business> db = new YelpDB("data/restaurants.json", "data/reviews.json", "data/users.json");
+			assertTrue(db.getPredictorFunction("-w8H1G9raUC0Gg_zvlJDwg").applyAsDouble(db, "ipgnAjJ5TUBWGmGxxzoiGQ") >1.0);
 		}catch(IOException e) {
 			fail();
 		}
