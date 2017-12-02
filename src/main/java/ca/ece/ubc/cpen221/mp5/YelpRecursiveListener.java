@@ -16,15 +16,18 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link YelpListener},
- * which can be extended to create a listener which only needs to handle a subset
- * of the available methods.
+ * Uses two stacks of Lists of Queries to hold the current and & or expressions'
+ * children - enabling recursive construction.
+ * 
+ * Rep Invariant:
+ * orList is not null
+ * andList is not null
+ * database is not null
+ * main is the orExpression at the root node.
  */
 public class YelpRecursiveListener extends YelpBaseListener {
 	/**
-	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation does nothing.</p>
 	 */
 	private Query main;
 	private Stack<List<Query>> orList = new Stack<List<Query>>();
@@ -34,9 +37,9 @@ public class YelpRecursiveListener extends YelpBaseListener {
 		this.orList.push(new ArrayList<Query>());
 	}
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 *	When you leave an orExpression, simply pop off the top of the stack
+	 * - these are your children. Congratulations!
+	 * If these are the last children, congratulations again! You are the root node.
 	 */
 	@Override public void exitOrExpr(YelpParser.OrExprContext ctx) { 
 		Query orExpr;
@@ -52,36 +55,22 @@ public class YelpRecursiveListener extends YelpBaseListener {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation does nothing.</p>
+	 * Add a new List onto the stack for this new andExpression.
 	 */
 	@Override public void enterAndExpr(YelpParser.AndExprContext ctx) {
 		this.andList.push(new ArrayList<Query>());
 	}
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * Now you take it off, and add the resulting expression to the top 
+	 * of the orList.
 	 */
 	@Override public void exitAndExpr(YelpParser.AndExprContext ctx) { 
 		Query andExpr = new Query(andList.pop());
 		orList.peek().add(andExpr);
 	}
+	
 	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAtom(YelpParser.AtomContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAtom(YelpParser.AtomContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * Filter by those in the parsed neighbourhoods - add to query.
 	 */
 	@Override public void enterIn(YelpParser.InContext ctx) { 
 		Query in = new Query("in", ctx.getText());
@@ -101,7 +90,7 @@ public class YelpRecursiveListener extends YelpBaseListener {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation does nothing.</p>
+	 * Filter by those in the parsed categories - add to query.
 	 */
 	@Override public void enterCategory(YelpParser.CategoryContext ctx) { 
 		Query cat = new Query("category", ctx.getText());
@@ -121,9 +110,8 @@ public class YelpRecursiveListener extends YelpBaseListener {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation does nothing.</p>
+	 * Filter by those with ratings satisfying inequality - add to query.
 	 */
-	//not right
 	@Override public void enterRating(YelpParser.RatingContext ctx) {
 		Query pri = new Query("rating", ctx.getText());
 		String ineq = pri.searchFor.replaceAll("rating", "").replaceAll("[0-9 ]+", "");
@@ -171,7 +159,7 @@ public class YelpRecursiveListener extends YelpBaseListener {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation does nothing.</p>
+	 * Filter by those with prices satisfying inequality - add to query.
 	 */
 	@Override public void enterPrice(YelpParser.PriceContext ctx) { 
 		Query pri = new Query("priing", ctx.getText());
@@ -214,13 +202,7 @@ public class YelpRecursiveListener extends YelpBaseListener {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrice(YelpParser.PriceContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
+	 * Filter by those with names matching string - add to query.
 	 */
 	@Override public void enterName(YelpParser.NameContext ctx) { 
 		Query nam = new Query("name", ctx.getText());
@@ -230,55 +212,9 @@ public class YelpRecursiveListener extends YelpBaseListener {
 				.collect(Collectors.toSet()));
 		andList.peek().add(nam);
 	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitName(YelpParser.NameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRoot(YelpParser.RootContext ctx) {
-		
-	}
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRoot(YelpParser.RootContext ctx) { 
-		
-	}
 	
 	public Set<Business> getResult(){
 		return main.eval();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterEveryRule(ParserRuleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEveryRule(ParserRuleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void visitTerminal(TerminalNode node) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void visitErrorNode(ErrorNode node) { }
 }
