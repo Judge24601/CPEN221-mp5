@@ -26,7 +26,7 @@ public class YelpDBClient {
     
     /**
      * Send a request to the server. Requires this is "open".
-     * @param x to find Fibonacci(x)
+     * @param x request to send
      * @throws IOException if network or server failure
      */
     public void sendRequest(String x) throws IOException {
@@ -63,7 +63,11 @@ public class YelpDBClient {
         out.close();
         socket.close();
     }
-    
+    /**
+     * for testing only
+     * @param input
+     * @return
+     */
     public static String tester(String input) {
     	try {
            YelpDBClient client = new YelpDBClient("localhost", YelpDBServer.PORT_NUM);

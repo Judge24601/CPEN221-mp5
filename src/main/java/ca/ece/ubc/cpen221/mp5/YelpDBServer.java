@@ -13,6 +13,8 @@ import java.util.concurrent.CountDownLatch;
  * Rep Invariant: 
  * serverSocket is not null
  * database is not null
+ * restLatch and userLatch are not null and are only closed when 
+ * restaurants or Users are being modified.
  * 
  * Abstraction Function:
  * Wraps a YelpDB<Business> in a server framework.
@@ -63,7 +65,7 @@ public class YelpDBServer {
 		}
 	}
 	/**
-	 * Takes in a query, if it is one of the four base queries,
+	 * Takes in a query, if it is one of the four base queries, or the structured Query
 	 * pass it to the database, otherwise return an error.
 	 * Handles concurrency through countdownlatches - if writing is happening, 
 	 * cannot read or write to that area of the database.
@@ -155,6 +157,10 @@ public class YelpDBServer {
 			out.close();
 		}
 	}
+	/**
+	 * for testing only
+	 * @throws BindException
+	 */
 	public static void test() throws BindException{
 		try {
 			YelpDBServer server = new YelpDBServer(PORT_NUM);

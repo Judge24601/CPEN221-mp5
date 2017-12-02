@@ -18,8 +18,6 @@ public class YelpDB extends BusinessDB{
 
 	/**
 	 * Constructs the database from 3 Json Files
-	 * Currently only works for a database of business (constructs restaurants booooooo)
-	 * Will see if can make more generic later
 	 * @param restaurantFile - name of JSON file containing restaurant data
 	 * @param reviewFile - name of JSON file containing review data
 	 * @param userFile - name of JSON file containing user data
@@ -47,7 +45,11 @@ public class YelpDB extends BusinessDB{
 		}
 	}
 	
-	//private List<String> specialTypes = Arrays.asList("open", "business_id", "name");
+	/**
+	 * Gets JSON details of restaurant with id
+	 * @param id
+	 * @return JSON details restaurant with matching id, err otherwise
+	 */
 	public String getRestaurant(String id) {
 		try {
 			return businesses.get(id.trim()).toString();
@@ -56,6 +58,11 @@ public class YelpDB extends BusinessDB{
 		}
 	}
 	
+	/**
+	 * Adds a new restaurant to the database
+	 * @param id - JSON details of restaurant minus stars, id, etc
+	 * @return JSON details of added restaurant with stars, id, etc, error if cannot build
+	 */
 	public String addRestaurant(String id) {
 		Reader strRead = new StringReader(id);
 		JsonReader reader = Json.createReader(strRead);
@@ -68,7 +75,11 @@ public class YelpDB extends BusinessDB{
 			return "ERR: INVALID_RESTAURANT_STRING";
 		}
 	}
-	
+	/**
+	 * Adds a new review to the database
+	 * @param id - JSON details of review & parents minus id
+	 * @return JSON details of added review with id
+	 */
 	public String addReview(String id) {
 		Reader strRead = new StringReader(id);
 		JsonReader reader = Json.createReader(strRead);
@@ -92,7 +103,13 @@ public class YelpDB extends BusinessDB{
 			return "ERR: INVALID_REVIEW_STRING";
 		}
 	}
-	
+	/**
+	 * Returns the Set of Businesses matching the query.
+	 * Parses the query with ANTLR, then the class
+	 * YelpRecursiveListener does the work for us.
+	 * @param queryString - the query
+	 * @return the matched set
+	 */
 	@Override
 	public Set<Business> getMatches(String queryString){
 		@SuppressWarnings("deprecation")
@@ -114,7 +131,11 @@ public class YelpDB extends BusinessDB{
 		//Trees.inspect(tree, parser);
 		return listener.getResult();
 	}
-	
+	/**
+	 * Adds a new user to the database
+	 * @param id - JSON details of user minus reviewCount, id, etc
+	 * @return JSON details of added user with reviewCount, id, etc
+	 */
 	public String addUser(String id) {
 		Reader strRead = new StringReader(id);
 		System.out.println(id);
@@ -128,7 +149,12 @@ public class YelpDB extends BusinessDB{
 			return "ERR: INVALID_USER_STRING";
 		}
 	}
-	
+	/**
+	 * Calls constructor
+	 * not really necessary at the moment but could be useful for expansion
+	 * @param obj - JSON object
+	 * @return the built Restaurant
+	 */
 	private Restaurant buildBusiness(JsonObject obj) {
 		return new Restaurant(obj);
 	}	
